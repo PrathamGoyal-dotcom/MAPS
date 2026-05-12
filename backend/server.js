@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -15,6 +16,14 @@ app.use(express.json());
 
 // Initialize Database
 initDb();
+
+// Serve Static Files (Frontend)
+app.use(express.static(path.join(__dirname, '../')));
+
+// 0. Root Route for Health Check
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 // Routes
 
