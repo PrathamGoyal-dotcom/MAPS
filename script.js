@@ -138,8 +138,22 @@ if (contactForm) {
       const originalText = btn.innerHTML;
       btn.innerHTML = 'Sending...';
       btn.disabled = true;
-      
-      setTimeout(() => {
+
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone')?.value || '',
+        interest: document.getElementById('interest')?.value || '',
+        message: document.getElementById('message').value
+      };
+
+      fetch('http://localhost:5000/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(res => res.json())
+      .then(data => {
         document.getElementById('formSuccess').classList.add('show');
         e.target.reset();
         btn.innerHTML = originalText;
@@ -148,7 +162,13 @@ if (contactForm) {
         setTimeout(() => {
           document.getElementById('formSuccess').classList.remove('show');
         }, 5000);
-      }, 1000);
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        btn.innerHTML = 'Error! Try Again';
+        btn.disabled = false;
+        setTimeout(() => { btn.innerHTML = originalText; }, 3000);
+      });
     }
   });
 }
@@ -240,11 +260,148 @@ glowCards.forEach(card => {
 
 // ===== MEMBER LOGIN SIMULATION =====
 const loginForm = document.getElementById('memberLoginForm');
+const registerForm = document.getElementById('memberRegisterForm');
 const portalLogin = document.getElementById('portalLogin');
+const portalRegister = document.getElementById('portalRegister');
 const portalDashboard = document.getElementById('portalDashboard');
 const portalTitle = document.getElementById('portalTitle');
 const portalSubtitle = document.getElementById('portalSubtitle');
 const loginUser = document.getElementById('loginUser');
+const loginPass = document.getElementById('loginPass');
+const portalLogout = document.getElementById('portalLogout');
+
+// ===== TOAST NOTIFICATIONS =====
+function showToast(message, type = 'info') {
+  let container = document.querySelector('.toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+  
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
+  toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+  
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}
+
+// ===== PASSWORD VISIBILITY TOGGLE =====
+document.querySelectorAll('.password-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.target;
+    const input = document.getElementById(targetId);
+    const icon = btn.querySelector('i');
+    
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+  });
+});
+
+// ===== PASSWORD STRENGTH CHECKER =====
+const regPass = document.getElementById('regPass');
+const strengthProgress = document.getElementById('strengthProgress');
+
+if (regPass && strengthProgress) {
+  regPass.addEventListener('input', () => {
+    const val = regPass.value;
+    let strength = 0;
+    
+    if (val.length >= 6) strength++;
+    if (val.match(/[A-Z]/) && val.match(/[0-9]/)) strength++;
+    if (val.match(/[^A-Za-z0-9]/)) strength++;
+    
+    strengthProgress.className = '';
+    if (val.length === 0) {
+      strengthProgress.style.width = '0';
+    } else if (strength === 1) {
+      strengthProgress.classList.add('strength-weak');
+    } else if (strength === 2) {
+      strengthProgress.classList.add('strength-medium');
+    } else if (strength >= 3) {
+      strengthProgress.classList.add('strength-strong');
+    }
+  });
+}
+
+// Toggle between Login and Register
+const showRegister = document.getElementById('showRegister');
+const showLogin = document.getElementById('showLogin');
+
+if (showRegister) {
+  showRegister.addEventListener('click', (e) => {
+    e.preventDefault();
+    portalLogin.style.display = 'none';
+    portalRegister.style.display = 'block';
+    portalTitle.innerHTML = 'Member <span class="highlight">Registration</span>';
+    portalSubtitle.innerHTML = 'Join the MAPS community and start your transformation.';
+  });
+}
+
+if (showLogin) {
+  showLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    portalRegister.style.display = 'none';
+    portalLogin.style.display = 'block';
+    portalTitle.innerHTML = 'Member <span class="highlight">Login</span>';
+    portalSubtitle.innerHTML = 'Access your schedule, book classes, and connect with the community.';
+  });
+}
+
+// Helper to handle successful login/register
+function handleAuthSuccess(user, token) {
+  localStorage.setItem('maps_token', token);
+  localStorage.setItem('maps_user', JSON.stringify(user));
+  
+  portalLogin.style.display = 'none';
+  portalRegister.style.display = 'none';
+  portalDashboard.style.display = 'flex';
+  if (portalLogout) portalLogout.style.display = 'inline-block';
+  
+  portalTitle.innerHTML = `Welcome back, <span class="highlight">${user.username}</span>`;
+  portalSubtitle.innerHTML = "Here is your personal dashboard for today.";
+  showToast(`Welcome, ${user.username}!`, 'success');
+}
+
+// Logout Function
+if (portalLogout) {
+  portalLogout.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('maps_token');
+    localStorage.removeItem('maps_user');
+    location.reload(); // Refresh to reset state
+  });
+}
+
+// Check Session on Load & Handle Registration Redirect
+window.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('maps_token');
+  const userStr = localStorage.getItem('maps_user');
+  
+  if (token && userStr && portalDashboard) {
+    try {
+      const user = JSON.parse(userStr);
+      handleAuthSuccess(user, token);
+    } catch (e) {
+      localStorage.removeItem('maps_token');
+      localStorage.removeItem('maps_user');
+    }
+  } else if (location.hash === '#register' && showRegister) {
+    showRegister.click();
+  }
+});
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -254,18 +411,70 @@ if (loginForm) {
     
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
     btn.disabled = true;
-    
-    setTimeout(() => {
-      const username = loginUser.value.trim() || 'Member';
-      portalLogin.style.display = 'none';
-      portalDashboard.style.display = 'flex';
-      
-      portalTitle.innerHTML = `Welcome back, <span class="highlight">${username}</span>`;
-      portalSubtitle.innerHTML = "Here is your personal dashboard for today.";
-      
+
+    fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: loginUser.value.trim(),
+        password: loginPass.value
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
       btn.innerHTML = originalText;
       btn.disabled = false;
-    }, 1200);
+
+      if (data.token) {
+        handleAuthSuccess(data.user, data.token);
+      } else {
+        showToast(data.message || 'Login failed', 'error');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      showToast('Connection error. Is the server running?', 'error');
+    });
+  });
+}
+
+if (registerForm) {
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = registerForm.querySelector('button');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Creating Account...';
+    btn.disabled = true;
+
+    fetch('http://localhost:5000/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: document.getElementById('regUser').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        password: document.getElementById('regPass').value
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+
+      if (data.token) {
+        handleAuthSuccess(data.user, data.token);
+      } else {
+        showToast(data.message || 'Registration failed', 'error');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      showToast('Connection error. Is the server running?', 'error');
+    });
   });
 }
 
@@ -282,6 +491,28 @@ portalTabs.forEach(tab => {
     // Add active class to clicked
     tab.classList.add('active');
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== SCHEDULE FILTERS (TODAY, TOMORROW, WEEK) =====
+const scheduleFilters = document.querySelectorAll('.schedule-filters span');
+const scheduleLists = document.querySelectorAll('.schedule-list');
+
+scheduleFilters.forEach(filter => {
+  filter.addEventListener('click', () => {
+    // Remove active class from all filters
+    scheduleFilters.forEach(f => f.classList.remove('active'));
+    // Add active class to clicked filter
+    filter.classList.add('active');
+    
+    // Hide all lists
+    scheduleLists.forEach(list => list.style.display = 'none');
+    // Show targeted list
+    const targetId = 'list-' + filter.dataset.filter;
+    const targetList = document.getElementById(targetId);
+    if (targetList) {
+      targetList.style.display = 'block';
+    }
   });
 });
 
@@ -688,5 +919,150 @@ if (floorplanZones.length > 0) {
         fpPreviewImg.style.opacity = '1';
       }, 150);
     });
+  });
+}
+
+// ===== CLASS & PLAN BOOKING SYSTEM & CHECKOUT =====
+const checkoutModal = document.getElementById('checkoutModal');
+const checkoutSection = document.getElementById('checkoutSection');
+const closeCheckout = document.getElementById('closeCheckout');
+const cancelCheckout = document.getElementById('cancelCheckout');
+const checkoutClassName = document.getElementById('checkoutClassName');
+const checkoutBasePrice = document.getElementById('checkoutBasePrice');
+const checkoutTax = document.getElementById('checkoutTax');
+const checkoutTotal = document.getElementById('checkoutTotal');
+const paymentForm = document.getElementById('paymentForm');
+const payName = document.getElementById('payName');
+const payEmail = document.getElementById('payEmail');
+
+let activeBookingBtn = null;
+let currentPrice = 0;
+
+document.addEventListener('click', (e) => {
+  // Handle Class Booking
+  if (e.target.classList.contains('book-class-btn')) {
+    const btn = e.target;
+    const isBooked = btn.classList.contains('btn-orange');
+    
+    if (!isBooked) {
+      activeBookingBtn = btn;
+      const className = btn.closest('.schedule-item').querySelector('h4').textContent;
+      currentPrice = 499; 
+      openCheckout(className, currentPrice);
+    } else {
+      btn.classList.remove('btn-orange');
+      btn.classList.add('btn-white');
+      btn.innerHTML = 'Book';
+      showToast('Booking cancelled.', 'info');
+    }
+  }
+
+  // Handle Membership Plan Purchase
+  if (e.target.classList.contains('plan-buy-btn')) {
+    const btn = e.target;
+    activeBookingBtn = btn;
+    const planName = btn.dataset.plan;
+    currentPrice = parseInt(btn.dataset.price);
+    openCheckout(planName, currentPrice);
+  }
+});
+
+function openCheckout(name, price) {
+  updateCheckoutUI(name, price);
+  
+  if (checkoutModal) {
+    checkoutModal.classList.add('active');
+  } else if (checkoutSection) {
+    checkoutSection.style.display = 'block';
+    checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Trigger reveal manually if observer didn't catch it
+    const revealEl = checkoutSection.querySelector('.reveal');
+    if (revealEl) revealEl.classList.add('active');
+  }
+}
+
+function updateCheckoutUI(name, price) {
+  if (checkoutClassName) checkoutClassName.textContent = name;
+  if (checkoutBasePrice) checkoutBasePrice.textContent = `₹${price.toLocaleString()}`;
+  
+  const tax = Math.round(price * 0.18);
+  const total = price + tax;
+  
+  if (checkoutTax) checkoutTax.textContent = `₹${tax.toLocaleString()}`;
+  if (checkoutTotal) checkoutTotal.textContent = `₹${total.toLocaleString()}`;
+  
+  const user = JSON.parse(localStorage.getItem('maps_user'));
+  if (user) {
+    if (payName) payName.value = user.username;
+    if (payEmail) payEmail.value = user.email;
+  }
+}
+
+if (closeCheckout) {
+  closeCheckout.addEventListener('click', () => {
+    checkoutModal.classList.remove('active');
+  });
+}
+
+if (cancelCheckout) {
+  cancelCheckout.addEventListener('click', () => {
+    if (checkoutSection) {
+      checkoutSection.style.display = 'none';
+      document.getElementById('membership').scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+}
+
+if (paymentForm) {
+  paymentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = paymentForm.querySelector('button');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Payment...';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      
+      if (checkoutModal) checkoutModal.classList.remove('active');
+      if (checkoutSection) checkoutSection.style.display = 'none';
+      
+      paymentForm.reset();
+      
+      const user = JSON.parse(localStorage.getItem('maps_user')) || {
+        username: payName?.value || 'Guest',
+        email: payEmail?.value || 'guest@example.com'
+      };
+      const itemName = checkoutClassName.textContent;
+
+      fetch('http://localhost:5000/api/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user: user,
+          className: itemName,
+          amount: currentPrice + Math.round(currentPrice * 0.18),
+          status: 'Completed'
+        })
+      }).catch(err => console.error('Notification Error:', err));
+
+      if (activeBookingBtn) {
+        if (activeBookingBtn.classList.contains('book-class-btn')) {
+          activeBookingBtn.classList.remove('btn-white');
+          activeBookingBtn.classList.add('btn-orange');
+          activeBookingBtn.innerHTML = '<i class="fas fa-check"></i> Booked';
+        } else {
+          showToast(`Welcome to ${itemName}!`, 'success');
+        }
+        
+        activeBookingBtn.style.transform = 'scale(1.1)';
+        setTimeout(() => activeBookingBtn.style.transform = '', 200);
+        
+        showToast('Payment successful! Transaction complete.', 'success');
+        activeBookingBtn = null;
+      }
+    }, 2000);
   });
 }

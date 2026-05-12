@@ -66,6 +66,7 @@
       <span class="section-label">Members Area</span>
       <h2 class="section-title" id="portalTitle">Member <span class="highlight">Login</span></h2>
       <p class="section-subtitle" id="portalSubtitle">Access your schedule, book classes, and connect with the community.</p>
+      <a href="#" id="portalLogout" style="display: none; color: var(--accent-primary); text-decoration: none; font-size: 14px; margin-top: 10px; font-weight: 600;"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
     
     <!-- LOGIN FORM -->
@@ -73,13 +74,41 @@
       <form id="memberLoginForm">
         <div class="form-group" style="margin-bottom: 20px;">
           <label for="loginUser">Username or Email</label>
-          <input type="text" id="loginUser" placeholder="Enter any username..." required autocomplete="off">
+          <input type="text" id="loginUser" placeholder="Enter username or email..." required autocomplete="off">
         </div>
-        <div class="form-group" style="margin-bottom: 24px;">
+        <div class="form-group" style="margin-bottom: 24px; position: relative;">
           <label for="loginPass">Password</label>
-          <input type="password" id="loginPass" placeholder="Enter any password..." required>
+          <input type="password" id="loginPass" placeholder="Enter your password..." required>
+          <button type="button" class="password-toggle" data-target="loginPass"><i class="fas fa-eye"></i></button>
         </div>
         <button type="submit" class="btn-orange" style="width: 100%; justify-content: center;">Secure Login <i class="fas fa-lock" style="margin-left: 8px;"></i></button>
+        <p style="text-align: center; margin-top: 20px; color: var(--text-dim); font-size: 14px;">
+          Don't have an account? <a href="#" id="showRegister" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Sign Up</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- REGISTER FORM (Hidden by default) -->
+    <div class="portal-login glow-card reveal" id="portalRegister" style="display: none;">
+      <form id="memberRegisterForm">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="regUser">Username</label>
+          <input type="text" id="regUser" placeholder="Choose a username..." required autocomplete="off">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" placeholder="your@email.com" required autocomplete="off">
+        </div>
+        <div class="form-group" style="margin-bottom: 24px; position: relative;">
+          <label for="regPass">Password</label>
+          <input type="password" id="regPass" placeholder="Create a strong password..." required>
+          <button type="button" class="password-toggle" data-target="regPass"><i class="fas fa-eye"></i></button>
+          <div class="password-strength-bar"><div id="strengthProgress"></div></div>
+        </div>
+        <button type="submit" class="btn-orange" style="width: 100%; justify-content: center;">Create Account <i class="fas fa-user-plus" style="margin-left: 8px;"></i></button>
+        <p style="text-align: center; margin-top: 20px; color: var(--text-dim); font-size: 14px;">
+          Already have an account? <a href="#" id="showLogin" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Log In</a>
+        </p>
       </form>
     </div>
 
@@ -96,19 +125,19 @@
           <div class="schedule-header">
             <h3>Upcoming Classes</h3>
             <div class="schedule-filters">
-              <span class="active">Today</span>
-              <span>Tomorrow</span>
-              <span>Week</span>
+              <span class="active" data-filter="today">Today</span>
+              <span data-filter="tomorrow">Tomorrow</span>
+              <span data-filter="week">Week</span>
             </div>
           </div>
-          <div class="schedule-list">
+          <div class="schedule-list active" id="list-today">
             <div class="schedule-item">
               <div class="time">06:00 AM</div>
               <div class="details">
                 <h4>HIIT Burnout</h4>
                 <p>with Coach Vikram</p>
               </div>
-              <button class="btn-orange btn-small">Booked</button>
+              <button class="btn-white btn-small book-class-btn">Book</button>
             </div>
             <div class="schedule-item">
               <div class="time">08:30 AM</div>
@@ -116,7 +145,7 @@
                 <h4>Morning Flow Yoga</h4>
                 <p>with Coach Neha</p>
               </div>
-              <button class="btn-white btn-small">Book</button>
+              <button class="btn-white btn-small book-class-btn">Book</button>
             </div>
             <div class="schedule-item">
               <div class="time">05:00 PM</div>
@@ -124,7 +153,61 @@
                 <h4>Powerlifting Basics</h4>
                 <p>with Coach Arjun</p>
               </div>
-              <button class="btn-white btn-small">Waitlist</button>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+          </div>
+
+          <div class="schedule-list" id="list-tomorrow" style="display: none;">
+            <div class="schedule-item">
+              <div class="time">07:00 AM</div>
+              <div class="details">
+                <h4>Zumba Fusion</h4>
+                <p>with Coach Neha</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">10:00 AM</div>
+              <div class="details">
+                <h4>Calisthenics Pro</h4>
+                <p>with Coach Vikram</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">06:30 PM</div>
+              <div class="details">
+                <h4>CrossFit Open</h4>
+                <p>with Coach Arjun</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+          </div>
+
+          <div class="schedule-list" id="list-week" style="display: none;">
+            <div class="schedule-item">
+              <div class="time">Mon 06:00 AM</div>
+              <div class="details">
+                <h4>Full Body Blast</h4>
+                <p>with Coach Vikram</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">Wed 05:30 PM</div>
+              <div class="details">
+                <h4>Mobility & Recovery</h4>
+                <p>with Coach Neha</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">Sat 09:00 AM</div>
+              <div class="details">
+                <h4>Endurance Challenge</h4>
+                <p>with Coach Arjun</p>
+              </div>
+              <button class="btn-white btn-small book-class-btn">Book</button>
             </div>
           </div>
         </div>
@@ -154,6 +237,54 @@
             <input type="text" id="portalChatInput" placeholder="Message the community..." required autocomplete="off">
             <button type="submit" class="btn-orange btn-small"><i class="fas fa-paper-plane"></i></button>
           </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CHECKOUT MODAL -->
+    <div class="checkout-modal" id="checkoutModal">
+      <div class="checkout-content glow-card">
+        <button class="checkout-close" id="closeCheckout">&times;</button>
+        <div class="checkout-header">
+          <h3>Confirm <span class="highlight">Booking</span></h3>
+          <p id="checkoutClassName">HIIT Burnout</p>
+        </div>
+        
+        <div class="payment-details">
+          <div class="payment-row">
+            <span>Class Fee</span>
+            <span>₹499</span>
+          </div>
+          <div class="payment-row">
+            <span>Tax (GST)</span>
+            <span>₹90</span>
+          </div>
+          <div class="payment-row total">
+            <span>Total Amount</span>
+            <span>₹589</span>
+          </div>
+        </div>
+
+        <form id="paymentForm">
+          <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" placeholder="xxxx xxxx xxxx xxxx" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiry</label>
+              <input type="text" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="password" placeholder="***" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-orange" style="width:100%; justify-content:center; margin-top:10px;">Pay & Book Now</button>
+        </form>
+        
+        <div class="payment-security">
+          <i class="fas fa-shield-alt"></i> Secure 256-bit SSL Encrypted Payment
         </div>
       </div>
     </div>
