@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MAPS Gym — Align Your Fitness Path with MAPS. State-of-the-art fitness center with expert trainers, modern equipment, and flexible memberships in Delhi.">
+  <title>MAPS Gym — Align Your Fitness Path</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-content">
+    <div class="logo-ring" style="width: 80px; height: 80px; border-width: 3px;"></div>
+    <i class="fas fa-bolt" style="font-size: 32px; color: var(--accent-primary); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scrollProgressBar"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-content">
+    <a href="#home" class="nav-brand-logo">
+      <div class="logo-icon-wrapper">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <div class="logo-text">
+        M<span class="logo-a">A</span>PS<span class="logo-dot">.</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#membership">Membership</a></li>
+    </ul>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="portal.html" class="btn-white" style="padding: 10px 20px; font-size: 14px;">Member Login</a>
+      <a href="#membership" class="nav-cta">Join Now</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#about">About Us</a>
+  <a href="#programs">Programs</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#contact">Contact</a>
+  <a href="#membership">Membership</a>
+  <a href="#contact" class="btn-orange" style="margin-top:24px">Book Free Trial</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline id="heroVideo">
+      <!-- Dark moody fitness video from Pexels -->
+      <source src="https://videos.pexels.com/video-files/4754030/4754030-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+  </div>
+  <div class="hero-content reveal">
+    <div class="hero-brand-block reveal">
+      <div class="brand-logo-mark">
+        <div class="logo-ring"></div>
+        <i class="fas fa-fire"></i>
+      </div>
+      <div class="brand-wordmark">MAPS</div>
+      <div class="brand-subtitle">PREMIUM FITNESS CLUB</div>
+    </div>
+    <h1>Transform Your Body,<br>Transform Your <span class="highlight">Life</span></h1>
+    <p class="subtitle">Experience fitness like never before. State-of-the-art equipment, elite personal trainers, and a thriving community dedicated to pushing you beyond your limits.</p>
+    <div class="hero-buttons">
+      <a href="#membership" class="btn-orange">Start Your Journey <i class="fas fa-arrow-right"></i></a>
+      <a href="#membership" class="btn-white">View Pricing Plans</a>
+    </div>
+  </div>
+</section>
+
+<!-- INFINITE SCROLLING MARQUEE -->
+<div class="scrolling-marquee-container">
+  <div class="scrolling-marquee">
+    <span>• NO EXCUSES • PUSH YOUR LIMITS • UNLOCK YOUR POTENTIAL • GRIND NEVER STOPS • BUILD YOUR LEGACY • ALIGN YOUR PATH </span>
+    <span>• NO EXCUSES • PUSH YOUR LIMITS • UNLOCK YOUR POTENTIAL • GRIND NEVER STOPS • BUILD YOUR LEGACY • ALIGN YOUR PATH </span>
+  </div>
+</div>
+
+<!-- WHY CHOOSE MAPS -->
+<section class="section gray-bg" id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Why Choose Us</span>
+      <h2 class="section-title">The MAPS <span class="highlight">Advantage</span></h2>
+      <p class="section-subtitle">We go beyond traditional gyms to offer a holistic approach to your health, fitness, and overall well-being.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card glow-card reveal delay-100">
+        <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+        <h3>Modern Equipment</h3>
+        <p>Train with the latest biometric machines, premium free weights, and specialized functional training rigs designed for peak performance.</p>
+      </div>
+      <div class="feature-card glow-card reveal delay-200">
+        <div class="feature-icon"><i class="fas fa-id-badge"></i></div>
+        <h3>Elite Trainers</h3>
+        <p>Our internationally certified coaches provide personalized guidance, form correction, and custom blueprints to ensure you hit your goals safely.</p>
+      </div>
+      <div class="feature-card glow-card reveal delay-300">
+        <div class="feature-icon"><i class="fas fa-tag"></i></div>
+        <h3>Flexible Memberships</h3>
+        <p>No hidden fees or long-term lock-ins. Choose from monthly, quarterly, or annual plans tailored to fit your budget and lifestyle.</p>
+      </div>
+      <div class="feature-card glow-card reveal delay-100">
+        <div class="feature-icon"><i class="fas fa-heart"></i></div>
+        <h3>Community Support</h3>
+        <p>Join a tribe of motivated individuals. From group challenges to member events, find the encouragement you need to stay consistent.</p>
+      </div>
+      <div class="feature-card glow-card reveal delay-200">
+        <div class="feature-icon"><i class="fas fa-running"></i></div>
+        <h3>Diverse Programs</h3>
+        <p>Boredom is not an option. Mix up your routine with High-Intensity Interval Training, Calisthenics, Powerlifting, and Mind-Body classes.</p>
+      </div>
+      <div class="feature-card glow-card reveal delay-300">
+        <div class="feature-icon"><i class="fas fa-pump-soap"></i></div>
+        <h3>Impeccable Hygiene</h3>
+        <p>Your health is our priority. We maintain hospital-grade cleanliness standards with 24/7 air purification and hourly equipment sanitization.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section" id="programs">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Our Expertise</span>
+      <h2 class="section-title">Programs Built for <span class="highlight">Results</span></h2>
+      <p class="section-subtitle">Whether you're a beginner or a seasoned athlete, our comprehensive programs are designed to challenge and transform you.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card glow-card reveal delay-100">
+        <div class="program-img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1470&auto=format&fit=crop" alt="Personal Training" loading="lazy"><div class="program-icon-badge"><i class="fas fa-user-friends"></i></div></div>
+        <div class="program-content">
+          <h3>Personal Training</h3>
+          <p>Accelerate your progress with 1-on-1 coaching. Get a customized workout regimen, dedicated accountability, and real-time form adjustments.</p>
+          <a href="#contact" class="program-link">Inquire Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="program-card glow-card reveal delay-200">
+        <div class="program-img"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1470&auto=format&fit=crop" alt="Group Classes" loading="lazy"><div class="program-icon-badge"><i class="fas fa-users"></i></div></div>
+        <div class="program-content">
+          <h3>Dynamic Group Classes</h3>
+          <p>Feed off the energy of the room. Join expert-led sessions in Spin, Zumba, HIIT, and Bootcamp that make sweating out calories fun.</p>
+          <a href="#contact" class="program-link">View Schedule <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="program-card glow-card reveal delay-300">
+        <div class="program-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1453&auto=format&fit=crop" alt="Nutrition Counseling" loading="lazy"><div class="program-icon-badge"><i class="fas fa-apple-alt"></i></div></div>
+        <div class="program-content">
+          <h3>Nutrition Counseling</h3>
+          <p>You can't out-train a bad diet. Work with our certified nutritionists to develop sustainable meal plans that fuel your workouts and recovery.</p>
+          <a href="#contact" class="program-link">Book Consultation <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FITNESS CALCULATOR -->
+<section class="section gray-bg" id="calculator">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Nutrition Tools</span>
+      <h2 class="section-title">Daily Calorie <span class="highlight">Calculator</span></h2>
+      <p class="section-subtitle">Find out exactly how much you need to eat to hit your goals.</p>
+    </div>
+    <div class="calculator-card glow-card reveal delay-100">
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="form-group">
+            <label>Weight (kg): <span id="valWeight">75</span></label>
+            <input type="range" id="calcWeight" min="40" max="150" value="75">
+          </div>
+          <div class="form-group">
+            <label>Height (cm): <span id="valHeight">175</span></label>
+            <input type="range" id="calcHeight" min="140" max="220" value="175">
+          </div>
+          <div class="form-group">
+            <label>Age: <span id="valAge">25</span></label>
+            <input type="range" id="calcAge" min="16" max="80" value="25">
+          </div>
+          <div class="form-group">
+            <label>Activity Level</label>
+            <select id="calcActivity">
+              <option value="1.2">Sedentary</option>
+              <option value="1.375">Lightly Active</option>
+              <option value="1.55" selected>Moderately Active</option>
+              <option value="1.725">Very Active</option>
+              <option value="1.9">Extra Active</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-results">
+          <h3>Your Target</h3>
+          <div class="calc-number"><span id="calcCalories">2,450</span> <small>kcal/day</small></div>
+          <div class="calc-macros">
+            <div class="macro"><span>Protein</span><strong id="calcProtein">150g</strong></div>
+            <div class="macro"><span>Carbs</span><strong id="calcCarbs">250g</strong></div>
+            <div class="macro"><span>Fats</span><strong id="calcFats">85g</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- INTERACTIVE FLOORPLAN -->
+<section class="section gray-bg" id="floorplan">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Explore</span>
+      <h2 class="section-title">Interactive <span class="highlight">Floorplan</span></h2>
+      <p class="section-subtitle">Hover over the zones to preview our state-of-the-art facilities.</p>
+    </div>
+    
+    <div class="floorplan-container reveal delay-100">
+      <div class="floorplan-map">
+        <div class="zone zone-weights" data-preview="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80">Strength Zone</div>
+        <div class="zone zone-cardio" data-preview="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80">Cardio Deck</div>
+        <div class="zone zone-yoga" data-preview="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&q=80">Zen Studio</div>
+        <div class="zone zone-pool" data-preview="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=800&q=80">Aquatics</div>
+      </div>
+      <div class="floorplan-preview">
+        <img id="fpPreviewImg" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Preview">
+        <div class="fp-overlay" id="fpOverlayText">Strength Zone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Facilities</span>
+      <h2 class="section-title">Take a <span class="highlight">Look Inside</span></h2>
+      <p class="section-subtitle">Experience a clean, modern, and motivating environment equipped with everything you need to succeed.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal delay-100" data-title="Strength Training Area"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=1470&auto=format&fit=crop" alt="Strength Training" loading="lazy"><div class="gallery-overlay"><h3>Strength Zone</h3><p>Premium free weights and benches</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-200" data-title="Weight Lifting Racks"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop" alt="Weight Lifting" loading="lazy"><div class="gallery-overlay"><h3>Powerlifting Racks</h3><p>Olympic barbells and squat racks</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-300" data-title="Group Fitness Studio"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1470&auto=format&fit=crop" alt="Group Fitness" loading="lazy"><div class="gallery-overlay"><h3>Group Studio</h3><p>Spacious area for dynamic classes</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-400" data-title="Cardio Zone"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?q=80&w=1374&auto=format&fit=crop" alt="Cardio Zone" loading="lazy"><div class="gallery-overlay"><h3>Cardio Deck</h3><p>Treadmills, ellipticals, and rowers</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-100" data-title="Yoga & Mindfulness Room"><img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=1470&auto=format&fit=crop" alt="Yoga Room" loading="lazy"><div class="gallery-overlay"><h3>Zen Studio</h3><p>Quiet space for yoga and stretching</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-200" data-title="Premium Locker Rooms"><img src="images/locker-room.png" alt="Locker Room" loading="lazy"><div class="gallery-overlay"><h3>Locker Rooms</h3><p>Secure, clean, and spacious</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-300" data-title="Swimming Pool & Recovery"><img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=1470&auto=format&fit=crop" alt="Swimming Pool" loading="lazy"><div class="gallery-overlay"><h3>Aquatics Center</h3><p>Lap pool and hydrotherapy</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+      <div class="gallery-item reveal delay-400" data-title="Community Turf Area"><img src="https://images.unsplash.com/photo-1554344728-77cf90d9ed26?q=80&w=1470&auto=format&fit=crop" alt="Turf Area" loading="lazy"><div class="gallery-overlay"><h3>Functional Turf</h3><p>Sled pushes, agility, and plyometrics</p></div><div class="expand-btn"><i class="fas fa-expand"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close Gallery">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous Image"><i class="fas fa-chevron-left"></i></button>
+  <img src="" alt="Gallery Image" id="lightboxImg">
+  <p class="lightbox-caption" id="lightboxTitle"></p>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next Image"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section gray-bg" id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Success Stories</span>
+      <h2 class="section-title">Real People, <span class="highlight">Real Results</span></h2>
+      <p class="section-subtitle">Don't just take our word for it. Hear from members who have transformed their lives at MAPS.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card glow-card reveal delay-100">
+        <i class="fas fa-quote-right quote-icon"></i>
+        <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <blockquote>"Joining MAPS was the turning point in my fitness journey. The trainers genuinely care about your progress, and the community keeps you accountable. I'm stronger than ever!"</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RK</div>
+          <div class="testimonial-info">
+            <h4>Raj Kumar</h4>
+            <span class="achievement"><i class="fas fa-trophy"></i> Lost 15kg in 4 months</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card glow-card reveal delay-200">
+        <i class="fas fa-quote-right quote-icon"></i>
+        <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <blockquote>"I used to find gyms intimidating, but MAPS is incredibly welcoming. The group classes are so fun that I actually look forward to working out now. Highly recommended!"</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">PS</div>
+          <div class="testimonial-info">
+            <h4>Priya Singh</h4>
+            <span class="achievement"><i class="fas fa-fire"></i> Gained Confidence & Stamina</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINERS -->
+<section class="section" id="trainers">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Our Experts</span>
+      <h2 class="section-title">Meet the <span class="highlight">MAPS Team</span></h2>
+      <p class="section-subtitle">Work with passionate, certified professionals dedicated to helping you unlock your full potential.</p>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer-card glow-card reveal delay-100">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1583465554959-1e37aa43bd56?q=80&w=1374&auto=format&fit=crop" alt="Coach Vikram" loading="lazy">
+          <div class="trainer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="trainer-info">
+          <h3>Coach Vikram</h3>
+          <p class="specialty">Head of Strength & Conditioning</p>
+          <p class="certs">NASM CPT, ACE Certified</p>
+          <p class="bio">With 10 years of experience, Vikram specializes in building raw strength, muscle hypertrophy, and correcting posture imbalances.</p>
+        </div>
+      </div>
+      <div class="trainer-card glow-card reveal delay-200">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1470&auto=format&fit=crop" alt="Coach Neha" loading="lazy">
+          <div class="trainer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="trainer-info">
+          <h3>Coach Neha</h3>
+          <p class="specialty">Yoga & Mindfulness Director</p>
+          <p class="certs">500-Hour RYT, Pilates Instructor</p>
+          <p class="bio">Neha focuses on mind-body connection, helping members improve flexibility, reduce stress, and build core stability.</p>
+        </div>
+      </div>
+      <div class="trainer-card glow-card reveal delay-300">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=1374&auto=format&fit=crop" alt="Coach Arjun" loading="lazy">
+          <div class="trainer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="trainer-info">
+          <h3>Coach Arjun</h3>
+          <p class="specialty">HIIT & Weight Loss Specialist</p>
+          <p class="certs">CrossFit L2, Precision Nutrition</p>
+          <p class="bio">Arjun brings high energy to every session. He excels in designing fat-burning workouts that push your cardiovascular limits.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CONTACT -->
+<section class="section gray-bg" id="contact">
+  <div class="container">
+    <div class="contact-container">
+      <div class="contact-info-wrap reveal delay-100">
+        <h3>Ready to Transform?</h3>
+        <p>Drop us a message, give us a call, or visit our facility. Our team is here to answer any questions and get you started on your fitness journey.</p>
+        
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-item-text">
+            <h4>Visit the Gym</h4>
+            <p>123 Fitness Boulevard, Sector 4<br>Delhi - 110001, India</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="contact-item-text">
+            <h4>Call Us Directly</h4>
+            <p>+91-9876-543-210<br>+91-11-2345-6789</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-item-text">
+            <h4>Send an Email</h4>
+            <p>hello@mapsgym.in<br>support@mapsgym.in</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-clock"></i></div>
+          <div class="contact-item-text">
+            <h4>Operating Hours</h4>
+            <p>Monday – Friday: 5:00 AM – 11:00 PM<br>Saturday – Sunday: 6:00 AM – 9:00 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form-wrap reveal delay-200">
+        <h3>Book Your Free Trial</h3>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" placeholder="John Doe" required>
+              <div class="form-error">Name is required</div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" placeholder="john@example.com" required>
+              <div class="form-error">Valid email is required</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+91 99999 99999">
+            </div>
+            <div class="form-group">
+              <label for="interest">I'm Interested In</label>
+              <select id="interest">
+                <option value="free-trial">Free 3-Day Trial</option>
+                <option value="membership">Membership Plans</option>
+                <option value="personal-training">Personal Training</option>
+                <option value="group-classes">Group Classes</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="message">Message *</label>
+            <textarea id="message" placeholder="Tell us a bit about your fitness goals..." required></textarea>
+            <div class="form-error">Message is required</div>
+          </div>
+          <button type="submit" class="btn-orange">Send Request <i class="fas fa-paper-plane" style="margin-left:8px"></i></button>
+          <div class="form-success" id="formSuccess">
+            <i class="fas fa-check-circle" style="font-size:24px; margin-bottom:8px; display:block;"></i>
+            Thank you! Your request has been received. Our team will contact you shortly.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="section premium-map-section reveal">
+  <div class="container map-layout-container">
+    <div class="map-container-wrapper">
+      <div class="map-overlay-gradient"></div>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.5!2d77.2!3d28.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM3JzQ4LjAiTiA3N8KwMTInMDAuMCJF!5e0!3m2!1sen!2sin!4v1" allowfullscreen loading="lazy" title="MAPS Gym Location"></iframe>
+      
+      <div class="map-animated-pin">
+        <div class="pin-pulse"></div>
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+    </div>
+    
+    <div class="map-floating-card">
+      <div class="map-card-header">
+        <div class="card-logo-icon"><i class="fas fa-fire"></i></div>
+        <h3>MAPS HQ</h3>
+      </div>
+      <p class="map-card-desc">The ultimate destination for strength, conditioning, and elite fitness training. Experience the luxury of fitness.</p>
+      
+      <div class="map-stats-chips">
+        <span class="chip"><i class="fas fa-clock"></i> 24/7 Access</span>
+        <span class="chip"><i class="fas fa-users"></i> 5000+ Members</span>
+        <span class="chip"><i class="fas fa-dumbbell"></i> Premium Equipment</span>
+      </div>
+
+      <div class="map-details">
+        <div class="detail-item">
+          <i class="fas fa-map-pin"></i>
+          <span>123 Fitness Blvd, Sector 4, Delhi</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-phone-alt"></i>
+          <span>+91-9876-543-210</span>
+        </div>
+      </div>
+
+      <div class="map-card-buttons">
+        <a href="https://maps.google.com" target="_blank" class="btn-orange">Get Directions <i class="fas fa-location-arrow" style="margin-left:8px;"></i></a>
+        <a href="#contact" class="btn-white">Book Free Trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="nav-logo">MA<span>P</span>S</a>
+        <p>Align Your Fitness Path with MAPS. We provide the expertise, equipment, and community you need to achieve lasting results and live a healthier life.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#programs">Our Programs</a></li>
+          <li><a href="#membership">Pricing Plans</a></li>
+          <li><a href="#gallery">Facility Gallery</a></li>
+          <li><a href="#trainers">Our Trainers</a></li>
+        </ul>
+      </div>
+      <div class="footer-info">
+        <h4>Contact Info</h4>
+        <p><i class="fas fa-map-marker-alt"></i> <span>123 Fitness Blvd, Sector 4<br>Delhi - 110001</span></p>
+        <p><i class="fas fa-phone-alt"></i> <span>+91-9876-543-210</span></p>
+        <p><i class="fas fa-envelope"></i> <span>hello@mapsgym.in</span></p>
+      </div>
+      <div>
+        <h4>Stay Updated</h4>
+        <div class="newsletter-form" id="newsletterForm">
+          <p>Subscribe to our newsletter for fitness tips, healthy recipes, and exclusive gym offers.</p>
+          <form class="input-group">
+            <input type="email" placeholder="Email address" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MAPS Fitness Center. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- AI CHATBOT INTEGRATION -->
+<div class="ai-bot-widget">
+  <button class="ai-bot-toggle" id="aiToggle" aria-label="Open AI Assistant">
+    <i class="fas fa-robot"></i>
+  </button>
+  <div class="ai-chat-window" id="aiWindow">
+    <div class="ai-header">
+      <div class="ai-title"><i class="fas fa-robot"></i> MAPS AI Assistant</div>
+      <button class="ai-close" id="aiClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-message bot">
+        Hi! I'm your MAPS AI Assistant. Ask me anything about memberships, hours, or facilities!
+      </div>
+      <div class="ai-typing" id="aiTyping">MAPS AI is typing...</div>
+    </div>
+    <form class="ai-input" id="aiForm">
+      <div class="ai-actions-left">
+        <button type="button" id="aiCameraBtn" title="Scan Food" class="icon-btn"><i class="fas fa-camera"></i></button>
+        <button type="button" id="aiMicBtn" title="Voice Input" class="icon-btn"><i class="fas fa-microphone"></i></button>
+      </div>
+      <input type="text" id="aiInput" placeholder="Type or ask..." autocomplete="off" required>
+      <div class="ai-actions-right">
+        <button type="button" id="aiVoiceToggle" title="Toggle Voice Output" class="icon-btn"><i class="fas fa-volume-up"></i></button>
+        <button type="submit" class="submit-btn"><i class="fas fa-arrow-up"></i></button>
+      </div>
+    </form>
+    
+    <!-- Camera Modal -->
+    <div class="ai-camera-modal" id="aiCameraModal">
+      <div class="ai-camera-header">
+        <span><i class="fas fa-camera"></i> Scan Food</span>
+        <button type="button" id="aiCameraClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="ai-camera-body">
+        <video id="aiCameraFeed" autoplay playsinline></video>
+        <canvas id="aiCameraCanvas" style="display:none;"></canvas>
+        <img id="aiCameraPreview" style="display:none;" />
+        <div id="aiCameraStatus" class="camera-status">Initializing...</div>
+      </div>
+      <div class="ai-camera-actions">
+        <button type="button" id="aiCameraCapture" class="btn-orange btn-small"><i class="fas fa-camera"></i> Capture</button>
+        <button type="button" id="aiCameraRetake" class="btn-white btn-small" style="display:none;"><i class="fas fa-redo"></i> Retake</button>
+        <button type="button" id="aiCameraAnalyze" class="btn-orange btn-small" style="display:none;"><i class="fas fa-search"></i> Analyze</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERSHIP (Moved to Last) -->
+<section class="section" id="membership">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title">Invest in Your <span class="highlight">Health</span></h2>
+      <p class="section-subtitle">Straightforward pricing with no hidden fees.</p>
+      
+      <!-- PRICING TOGGLE -->
+      <div class="pricing-toggle-wrap">
+        <span id="labelMonthly" class="active">Monthly</span>
+        <label class="switch">
+          <input type="checkbox" id="pricingToggle">
+          <span class="slider round"></span>
+        </label>
+        <span id="labelAnnually">Annually <span class="save-badge">Save 20%</span></span>
+      </div>
+    </div>
+    
+    <div class="pricing-grid">
+      <div class="pricing-card glow-card reveal delay-100">
+        <div class="pricing-header">
+          <h3>Basic Pass</h3>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="2999" data-annual="2399">2,999</span></div>
+          <div class="period">per month</div>
+        </div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> 24/7 Access to Gym Floor</li>
+          <li><i class="fas fa-check-circle"></i> Use of All Cardio & Weights</li>
+          <li><i class="fas fa-check-circle"></i> Digital Fitness Assessment</li>
+          <li><i class="fas fa-check-circle"></i> Standard Locker Facility</li>
+        </ul>
+        <button class="btn-white plan-buy-btn" data-plan="Basic Pass" data-price="2999">Choose Basic</button>
+      </div>
+      <div class="pricing-card featured glow-card reveal delay-200">
+        <div class="popular-badge">Most Popular</div>
+        <div class="pricing-header">
+          <h3>Premium Pro</h3>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="4999" data-annual="3999">4,999</span></div>
+          <div class="period">per month</div>
+        </div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> <strong>Everything in Basic</strong></li>
+          <li><i class="fas fa-check-circle"></i> Unlimited Group Fitness Classes</li>
+          <li><i class="fas fa-check-circle"></i> 1 Personal Training Session/mo</li>
+          <li><i class="fas fa-check-circle"></i> Steam, Sauna & Recovery Zone</li>
+          <li><i class="fas fa-check-circle"></i> MAPS App Progress Tracking</li>
+        </ul>
+        <button class="btn-orange plan-buy-btn" data-plan="Premium Pro" data-price="4999">Choose Premium</button>
+      </div>
+      <div class="pricing-card glow-card reveal delay-300">
+        <div class="pricing-header">
+          <h3>Ultimate Elite</h3>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="7999" data-annual="6399">7,999</span></div>
+          <div class="period">per month</div>
+        </div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> <strong>Everything in Premium</strong></li>
+          <li><i class="fas fa-check-circle"></i> 4 Personal Training Sessions/mo</li>
+          <li><i class="fas fa-check-circle"></i> Custom Monthly Diet Plan</li>
+          <li><i class="fas fa-check-circle"></i> Priority Class Booking</li>
+          <li><i class="fas fa-check-circle"></i> 2 Free Guest Passes/month</li>
+        </ul>
+        <button class="btn-white plan-buy-btn" data-plan="Ultimate Elite" data-price="7999">Choose Ultimate</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT SECTION -->
+<section class="section" id="checkoutSection" style="display: none; padding-top: 0;">
+  <div class="container">
+    <div class="checkout-inline-wrap glow-card reveal">
+      <div class="checkout-grid">
+        <div class="checkout-info-side">
+          <div class="checkout-header">
+            <h3>Confirm your <span class="highlight">Subscription</span></h3>
+            <p id="checkoutClassName" style="font-size: 24px; color: var(--accent-primary); font-weight: 800; margin-top: 10px;">Membership Plan</p>
+          </div>
+          <div class="payment-details">
+            <div class="payment-row">
+              <span>Plan Base Price</span>
+              <span id="checkoutBasePrice">₹0</span>
+            </div>
+            <div class="payment-row">
+              <span>Tax (GST 18%)</span>
+              <span id="checkoutTax">₹0</span>
+            </div>
+            <div class="payment-row total">
+              <span>Total Amount</span>
+              <span id="checkoutTotal">₹0</span>
+            </div>
+          </div>
+          <div class="payment-security">
+            <i class="fas fa-shield-alt"></i> Secure 256-bit SSL Encrypted Payment
+          </div>
+        </div>
+        
+        <div class="checkout-form-side">
+          <form id="paymentForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="payName" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="payEmail" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label>Card Number</label>
+              <input type="text" placeholder="xxxx xxxx xxxx xxxx" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expiry</label>
+                <input type="text" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                <label>CVV</label>
+                <input type="password" placeholder="***" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-orange" style="width:100%; justify-content:center; margin-top:10px;">Pay & Complete Subscription</button>
+            <button type="button" id="cancelCheckout" style="width:100%; background:none; border:none; color:var(--text-dim); margin-top:15px; cursor:pointer;">Cancel and choose another plan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+<script src="ChatBot/data/knowledge-base.js"></script>
+<script src="ChatBot/data/food-database.js"></script>
+<script src="ChatBot/js/nlp-engine.js"></script>
+<script src="ChatBot/js/context-manager.js"></script>
+<script src="ChatBot/js/food-analyzer.js"></script>
+<script src="ChatBot/js/gym-chatbot.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
