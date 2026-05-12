@@ -10,6 +10,17 @@
 </head>
 <body>
 
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-content">
+    <div class="logo-ring" style="width: 80px; height: 80px; border-width: 3px;"></div>
+    <i class="fas fa-bolt" style="font-size: 32px; color: var(--accent-primary); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scrollProgressBar"></div>
+
 <!-- CUSTOM CURSOR -->
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
@@ -17,7 +28,14 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-content">
-    <a href="#home" class="nav-logo">MA<span>P</span>S</a>
+    <a href="#home" class="nav-brand-logo">
+      <div class="logo-icon-wrapper">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <div class="logo-text">
+        M<span class="logo-a">A</span>PS<span class="logo-dot">.</span>
+      </div>
+    </a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -27,8 +45,8 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div style="display: flex; gap: 12px; align-items: center;">
-      <a href="#portal" class="nav-links" style="font-weight: 700; color: var(--text-dark); text-decoration: none; font-size: 14px; display: none;">Member Login</a>
-      <a href="#portal" class="btn-white" style="padding: 10px 20px; font-size: 14px;">Member Login</a>
+      <a href="portal.html" class="nav-links" style="font-weight: 700; color: var(--text-dark); text-decoration: none; font-size: 14px; display: none;">Member Login</a>
+      <a href="portal.html" class="btn-white" style="padding: 10px 20px; font-size: 14px;">Member Login</a>
       <a href="#contact" class="nav-cta">Join Now</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -50,8 +68,22 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline id="heroVideo">
+      <!-- Dark moody fitness video from Pexels -->
+      <source src="https://videos.pexels.com/video-files/4754030/4754030-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+  </div>
   <div class="hero-content reveal">
-    <div class="hero-tagline"><i class="fas fa-compass"></i> Align Your Fitness Path with MAPS</div>
+    <div class="hero-brand-block reveal">
+      <div class="brand-logo-mark">
+        <div class="logo-ring"></div>
+        <i class="fas fa-fire"></i>
+      </div>
+      <div class="brand-wordmark">MAPS</div>
+      <div class="brand-subtitle">PREMIUM FITNESS CLUB</div>
+    </div>
     <h1>Transform Your Body,<br>Transform Your <span class="highlight">Life</span></h1>
     <p class="subtitle">Experience fitness like never before. State-of-the-art equipment, elite personal trainers, and a thriving community dedicated to pushing you beyond your limits.</p>
     <div class="hero-buttons">
@@ -60,6 +92,14 @@
     </div>
   </div>
 </section>
+
+<!-- INFINITE SCROLLING MARQUEE -->
+<div class="scrolling-marquee-container">
+  <div class="scrolling-marquee">
+    <span>• NO EXCUSES • PUSH YOUR LIMITS • UNLOCK YOUR POTENTIAL • GRIND NEVER STOPS • BUILD YOUR LEGACY • ALIGN YOUR PATH </span>
+    <span>• NO EXCUSES • PUSH YOUR LIMITS • UNLOCK YOUR POTENTIAL • GRIND NEVER STOPS • BUILD YOUR LEGACY • ALIGN YOUR PATH </span>
+  </div>
+</div>
 
 <!-- WHY CHOOSE MAPS -->
 <section class="section gray-bg" id="about">
@@ -141,19 +181,79 @@
   </div>
 </section>
 
+<!-- FITNESS CALCULATOR -->
+<section class="section gray-bg" id="calculator">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Nutrition Tools</span>
+      <h2 class="section-title">Daily Calorie <span class="highlight">Calculator</span></h2>
+      <p class="section-subtitle">Find out exactly how much you need to eat to hit your goals.</p>
+    </div>
+    <div class="calculator-card glow-card reveal delay-100">
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="form-group">
+            <label>Weight (kg): <span id="valWeight">75</span></label>
+            <input type="range" id="calcWeight" min="40" max="150" value="75">
+          </div>
+          <div class="form-group">
+            <label>Height (cm): <span id="valHeight">175</span></label>
+            <input type="range" id="calcHeight" min="140" max="220" value="175">
+          </div>
+          <div class="form-group">
+            <label>Age: <span id="valAge">25</span></label>
+            <input type="range" id="calcAge" min="16" max="80" value="25">
+          </div>
+          <div class="form-group">
+            <label>Activity Level</label>
+            <select id="calcActivity">
+              <option value="1.2">Sedentary</option>
+              <option value="1.375">Lightly Active</option>
+              <option value="1.55" selected>Moderately Active</option>
+              <option value="1.725">Very Active</option>
+              <option value="1.9">Extra Active</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-results">
+          <h3>Your Target</h3>
+          <div class="calc-number"><span id="calcCalories">2,450</span> <small>kcal/day</small></div>
+          <div class="calc-macros">
+            <div class="macro"><span>Protein</span><strong id="calcProtein">150g</strong></div>
+            <div class="macro"><span>Carbs</span><strong id="calcCarbs">250g</strong></div>
+            <div class="macro"><span>Fats</span><strong id="calcFats">85g</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- MEMBERSHIP -->
-<section class="section gray-bg" id="membership">
+<!-- MEMBERSHIP -->
+<section class="section" id="membership">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Pricing</span>
       <h2 class="section-title">Invest in Your <span class="highlight">Health</span></h2>
-      <p class="section-subtitle">Straightforward pricing with no hidden fees. Choose the membership tier that aligns with your fitness goals.</p>
+      <p class="section-subtitle">Straightforward pricing with no hidden fees.</p>
+      
+      <!-- PRICING TOGGLE -->
+      <div class="pricing-toggle-wrap">
+        <span id="labelMonthly" class="active">Monthly</span>
+        <label class="switch">
+          <input type="checkbox" id="pricingToggle">
+          <span class="slider round"></span>
+        </label>
+        <span id="labelAnnually">Annually <span class="save-badge">Save 20%</span></span>
+      </div>
     </div>
+    
     <div class="pricing-grid">
       <div class="pricing-card glow-card reveal delay-100">
         <div class="pricing-header">
           <h3>Basic Pass</h3>
-          <div class="price"><span class="currency">₹</span>2,999</div>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="2999" data-annual="2399">2,999</span></div>
           <div class="period">per month</div>
         </div>
         <ul class="pricing-features">
@@ -168,7 +268,7 @@
         <div class="popular-badge">Most Popular</div>
         <div class="pricing-header">
           <h3>Premium Pro</h3>
-          <div class="price"><span class="currency">₹</span>4,999</div>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="4999" data-annual="3999">4,999</span></div>
           <div class="period">per month</div>
         </div>
         <ul class="pricing-features">
@@ -183,7 +283,7 @@
       <div class="pricing-card glow-card reveal delay-300">
         <div class="pricing-header">
           <h3>Ultimate Elite</h3>
-          <div class="price"><span class="currency">₹</span>7,999</div>
+          <div class="price"><span class="currency">₹</span><span class="price-val" data-monthly="7999" data-annual="6399">7,999</span></div>
           <div class="period">per month</div>
         </div>
         <ul class="pricing-features">
@@ -194,6 +294,30 @@
           <li><i class="fas fa-check-circle"></i> 2 Free Guest Passes/month</li>
         </ul>
         <a href="#contact" class="btn-white">Choose Ultimate</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE FLOORPLAN -->
+<section class="section gray-bg" id="floorplan">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Explore</span>
+      <h2 class="section-title">Interactive <span class="highlight">Floorplan</span></h2>
+      <p class="section-subtitle">Hover over the zones to preview our state-of-the-art facilities.</p>
+    </div>
+    
+    <div class="floorplan-container reveal delay-100">
+      <div class="floorplan-map">
+        <div class="zone zone-weights" data-preview="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80">Strength Zone</div>
+        <div class="zone zone-cardio" data-preview="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800&q=80">Cardio Deck</div>
+        <div class="zone zone-yoga" data-preview="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&q=80">Zen Studio</div>
+        <div class="zone zone-pool" data-preview="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=800&q=80">Aquatics</div>
+      </div>
+      <div class="floorplan-preview">
+        <img id="fpPreviewImg" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Preview">
+        <div class="fp-overlay" id="fpOverlayText">Strength Zone</div>
       </div>
     </div>
   </div>
@@ -324,104 +448,7 @@
   </div>
 </section>
 
-<!-- MEMBER PORTAL SECTION -->
-<section id="portal" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label">Members Area</span>
-      <h2 class="section-title" id="portalTitle">Member <span class="highlight">Login</span></h2>
-      <p class="section-subtitle" id="portalSubtitle">Access your schedule, book classes, and connect with the community.</p>
-    </div>
-    
-    <!-- LOGIN FORM -->
-    <div class="portal-login glow-card reveal delay-100" id="portalLogin">
-      <form id="memberLoginForm">
-        <div class="form-group" style="margin-bottom: 20px;">
-          <label for="loginUser">Username or Email</label>
-          <input type="text" id="loginUser" placeholder="Enter any username..." required autocomplete="off">
-        </div>
-        <div class="form-group" style="margin-bottom: 24px;">
-          <label for="loginPass">Password</label>
-          <input type="password" id="loginPass" placeholder="Enter any password..." required>
-        </div>
-        <button type="submit" class="btn-orange" style="width: 100%; justify-content: center;">Secure Login <i class="fas fa-lock" style="margin-left: 8px;"></i></button>
-      </form>
-    </div>
 
-    <!-- DASHBOARD (Hidden by default) -->
-    <div class="portal-container glow-card" id="portalDashboard" style="display: none;">
-      <div class="portal-tabs">
-        <button class="portal-tab active" data-tab="schedule"><i class="fas fa-calendar-alt"></i> Class Schedule</button>
-        <button class="portal-tab" data-tab="chat"><i class="fas fa-comments"></i> Community Chat</button>
-      </div>
-      
-      <div class="portal-content">
-        <!-- SCHEDULE TAB -->
-        <div id="tab-schedule" class="portal-pane active">
-          <div class="schedule-header">
-            <h3>Upcoming Classes</h3>
-            <div class="schedule-filters">
-              <span class="active">Today</span>
-              <span>Tomorrow</span>
-              <span>Week</span>
-            </div>
-          </div>
-          <div class="schedule-list">
-            <div class="schedule-item">
-              <div class="time">06:00 AM</div>
-              <div class="details">
-                <h4>HIIT Burnout</h4>
-                <p>with Coach Vikram</p>
-              </div>
-              <button class="btn-orange btn-small">Booked</button>
-            </div>
-            <div class="schedule-item">
-              <div class="time">08:00 AM</div>
-              <div class="details">
-                <h4>Vinyasa Yoga</h4>
-                <p>with Coach Neha</p>
-              </div>
-              <button class="btn-white btn-small">Book</button>
-            </div>
-            <div class="schedule-item">
-              <div class="time">05:30 PM</div>
-              <div class="details">
-                <h4>Powerlifting Basics</h4>
-                <p>with Coach Arjun</p>
-              </div>
-              <button class="btn-white btn-small">Book</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- CHAT TAB -->
-        <div id="tab-chat" class="portal-pane">
-          <div class="chat-container">
-            <div class="chat-messages" id="communityChat">
-              <div class="message">
-                <div class="msg-avatar">V</div>
-                <div class="msg-content">
-                  <div class="msg-author">Vikram (Coach)</div>
-                  <div class="msg-text">Who's ready for the HIIT session tonight? Bring a towel! 😅</div>
-                </div>
-              </div>
-              <div class="message me">
-                <div class="msg-content">
-                  <div class="msg-author">You</div>
-                  <div class="msg-text">Already booked! See you there.</div>
-                </div>
-              </div>
-            </div>
-            <form class="chat-input-area" id="chatForm">
-              <input type="text" id="chatInput" placeholder="Type a message to the community..." required autocomplete="off">
-              <button type="submit"><i class="fas fa-paper-plane"></i></button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- CONTACT -->
 <section class="section gray-bg" id="contact">
@@ -508,9 +535,47 @@
 </section>
 
 <!-- MAP SECTION -->
-<section class="section map-section reveal">
-  <div class="map-container">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.5!2d77.2!3d28.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM3JzQ4LjAiTiA3N8KwMTInMDAuMCJF!5e0!3m2!1sen!2sin!4v1" allowfullscreen loading="lazy" title="MAPS Gym Location"></iframe>
+<section class="section premium-map-section reveal">
+  <div class="container map-layout-container">
+    <div class="map-container-wrapper">
+      <div class="map-overlay-gradient"></div>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.5!2d77.2!3d28.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM3JzQ4LjAiTiA3N8KwMTInMDAuMCJF!5e0!3m2!1sen!2sin!4v1" allowfullscreen loading="lazy" title="MAPS Gym Location"></iframe>
+      
+      <div class="map-animated-pin">
+        <div class="pin-pulse"></div>
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+    </div>
+    
+    <div class="map-floating-card">
+      <div class="map-card-header">
+        <div class="card-logo-icon"><i class="fas fa-fire"></i></div>
+        <h3>MAPS HQ</h3>
+      </div>
+      <p class="map-card-desc">The ultimate destination for strength, conditioning, and elite fitness training. Experience the luxury of fitness.</p>
+      
+      <div class="map-stats-chips">
+        <span class="chip"><i class="fas fa-clock"></i> 24/7 Access</span>
+        <span class="chip"><i class="fas fa-users"></i> 5000+ Members</span>
+        <span class="chip"><i class="fas fa-dumbbell"></i> Premium Equipment</span>
+      </div>
+
+      <div class="map-details">
+        <div class="detail-item">
+          <i class="fas fa-map-pin"></i>
+          <span>123 Fitness Blvd, Sector 4, Delhi</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-phone-alt"></i>
+          <span>+91-9876-543-210</span>
+        </div>
+      </div>
+
+      <div class="map-card-buttons">
+        <a href="https://maps.google.com" target="_blank" class="btn-orange">Get Directions <i class="fas fa-location-arrow" style="margin-left:8px;"></i></a>
+        <a href="#contact" class="btn-white">Book Free Trial</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -567,7 +632,7 @@
   </div>
 </footer>
 
-<!-- AI CHATBOT -->
+<!-- AI CHATBOT INTEGRATION -->
 <div class="ai-bot-widget">
   <button class="ai-bot-toggle" id="aiToggle" aria-label="Open AI Assistant">
     <i class="fas fa-robot"></i>
@@ -579,16 +644,51 @@
     </div>
     <div class="ai-messages" id="aiMessages">
       <div class="ai-message bot">
-        <p>Hi! I'm your MAPS AI Assistant. Ask me anything about memberships, hours, or facilities!</p>
+        Hi! I'm your MAPS AI Assistant. Ask me anything about memberships, hours, or facilities!
       </div>
+      <div class="ai-typing" id="aiTyping">MAPS AI is typing...</div>
     </div>
     <form class="ai-input" id="aiForm">
-      <input type="text" id="aiInput" placeholder="Type your question..." autocomplete="off" required>
-      <button type="submit"><i class="fas fa-arrow-up"></i></button>
+      <div class="ai-actions-left">
+        <button type="button" id="aiCameraBtn" title="Scan Food" class="icon-btn"><i class="fas fa-camera"></i></button>
+        <button type="button" id="aiMicBtn" title="Voice Input" class="icon-btn"><i class="fas fa-microphone"></i></button>
+      </div>
+      <input type="text" id="aiInput" placeholder="Type or ask..." autocomplete="off" required>
+      <div class="ai-actions-right">
+        <button type="button" id="aiVoiceToggle" title="Toggle Voice Output" class="icon-btn"><i class="fas fa-volume-up"></i></button>
+        <button type="submit" class="submit-btn"><i class="fas fa-arrow-up"></i></button>
+      </div>
     </form>
+    
+    <!-- Camera Modal -->
+    <div class="ai-camera-modal" id="aiCameraModal">
+      <div class="ai-camera-header">
+        <span><i class="fas fa-camera"></i> Scan Food</span>
+        <button type="button" id="aiCameraClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="ai-camera-body">
+        <video id="aiCameraFeed" autoplay playsinline></video>
+        <canvas id="aiCameraCanvas" style="display:none;"></canvas>
+        <img id="aiCameraPreview" style="display:none;" />
+        <div id="aiCameraStatus" class="camera-status">Initializing...</div>
+      </div>
+      <div class="ai-camera-actions">
+        <button type="button" id="aiCameraCapture" class="btn-orange btn-small"><i class="fas fa-camera"></i> Capture</button>
+        <button type="button" id="aiCameraRetake" class="btn-white btn-small" style="display:none;"><i class="fas fa-redo"></i> Retake</button>
+        <button type="button" id="aiCameraAnalyze" class="btn-orange btn-small" style="display:none;"><i class="fas fa-search"></i> Analyze</button>
+      </div>
+    </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+<script src="ChatBot/data/knowledge-base.js"></script>
+<script src="ChatBot/data/food-database.js"></script>
+<script src="ChatBot/js/nlp-engine.js"></script>
+<script src="ChatBot/js/context-manager.js"></script>
+<script src="ChatBot/js/food-analyzer.js"></script>
+<script src="ChatBot/js/gym-chatbot.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

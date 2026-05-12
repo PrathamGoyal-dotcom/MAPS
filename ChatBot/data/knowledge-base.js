@@ -124,9 +124,9 @@ const KnowledgeBase = {
   // ─── MEMBERSHIP ───
   membership: {
     plans: [
-      { name: "Basic", price: "$29/month", features: ["Gym floor access", "Locker room", "Free WiFi", "Standard hours (6AM-10PM)"], contract: "Month-to-month" },
-      { name: "Premium", price: "$49/month", features: ["Everything in Basic", "All group classes", "Sauna & steam room", "Extended hours (5AM-11PM)", "1 guest pass/month"], contract: "Month-to-month" },
-      { name: "VIP", price: "$79/month", features: ["Everything in Premium", "Personal trainer consultation (1/month)", "Towel service", "24/7 access", "Unlimited guest passes", "Nutrition planning session"], contract: "3-month minimum" }
+      { name: "Basic Pass", price: "₹2,999/month", features: ["24/7 Access to Gym Floor", "Use of All Cardio & Weights", "Digital Fitness Assessment", "Standard Locker Facility"], contract: "Month-to-month" },
+      { name: "Premium Pro", price: "₹4,999/month", features: ["Everything in Basic", "Unlimited Group Fitness Classes", "1 Personal Training Session/mo", "Steam, Sauna & Recovery Zone", "MAPS App Progress Tracking"], contract: "Month-to-month" },
+      { name: "Ultimate Elite", price: "₹7,999/month", features: ["Everything in Premium", "4 Personal Training Sessions/mo", "Custom Monthly Diet Plan", "Priority Class Booking", "2 Free Guest Passes/month"], contract: "3-month minimum" }
     ],
     policies: {
       cancellation: "Basic and Premium can be cancelled anytime with 30 days notice. VIP requires completion of 3-month minimum term.",

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MAPS Gym Member Portal - Access your schedule and community.">
+  <title>Member Portal — MAPS Gym</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #0b0b0b;
+      background-image: radial-gradient(circle at 50% 50%, rgba(255, 45, 45, 0.05) 0%, transparent 50%);
+    }
+    .portal-nav {
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-glass);
+      background: rgba(11, 11, 11, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .portal-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    #portal {
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- PORTAL NAVBAR -->
+<nav class="portal-nav">
+  <a href="index.html" class="nav-brand-logo">
+    <div class="logo-icon-wrapper">
+      <i class="fas fa-bolt"></i>
+    </div>
+    <div class="logo-text">
+      M<span class="logo-a">A</span>PS<span class="logo-dot">.</span>
+    </div>
+  </a>
+  <a href="index.html" class="btn-white"><i class="fas fa-arrow-left"></i> Back to Home</a>
+</nav>
+
+<!-- PORTAL MAIN -->
+<main class="portal-main">
+  <section id="portal" class="section" style="padding: 0;">
+    <div class="section-header reveal">
+      <span class="section-label">Members Area</span>
+      <h2 class="section-title" id="portalTitle">Member <span class="highlight">Login</span></h2>
+      <p class="section-subtitle" id="portalSubtitle">Access your schedule, book classes, and connect with the community.</p>
+    </div>
+    
+    <!-- LOGIN FORM -->
+    <div class="portal-login glow-card reveal delay-100" id="portalLogin">
+      <form id="memberLoginForm">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="loginUser">Username or Email</label>
+          <input type="text" id="loginUser" placeholder="Enter any username..." required autocomplete="off">
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="loginPass">Password</label>
+          <input type="password" id="loginPass" placeholder="Enter any password..." required>
+        </div>
+        <button type="submit" class="btn-orange" style="width: 100%; justify-content: center;">Secure Login <i class="fas fa-lock" style="margin-left: 8px;"></i></button>
+      </form>
+    </div>
+
+    <!-- DASHBOARD (Hidden by default) -->
+    <div class="portal-container glow-card" id="portalDashboard" style="display: none;">
+      <div class="portal-tabs">
+        <button class="portal-tab active" data-tab="schedule"><i class="fas fa-calendar-alt"></i> Class Schedule</button>
+        <button class="portal-tab" data-tab="chat"><i class="fas fa-comments"></i> Community Chat</button>
+      </div>
+      
+      <div class="portal-content">
+        <!-- SCHEDULE TAB -->
+        <div id="tab-schedule" class="portal-pane active">
+          <div class="schedule-header">
+            <h3>Upcoming Classes</h3>
+            <div class="schedule-filters">
+              <span class="active">Today</span>
+              <span>Tomorrow</span>
+              <span>Week</span>
+            </div>
+          </div>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <div class="time">06:00 AM</div>
+              <div class="details">
+                <h4>HIIT Burnout</h4>
+                <p>with Coach Vikram</p>
+              </div>
+              <button class="btn-orange btn-small">Booked</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">08:30 AM</div>
+              <div class="details">
+                <h4>Morning Flow Yoga</h4>
+                <p>with Coach Neha</p>
+              </div>
+              <button class="btn-white btn-small">Book</button>
+            </div>
+            <div class="schedule-item">
+              <div class="time">05:00 PM</div>
+              <div class="details">
+                <h4>Powerlifting Basics</h4>
+                <p>with Coach Arjun</p>
+              </div>
+              <button class="btn-white btn-small">Waitlist</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAT TAB -->
+        <div id="tab-chat" class="portal-pane">
+          <div class="chat-header">
+            <h3><span class="online-dot"></span> Members Lounge (12 Online)</h3>
+          </div>
+          <div class="chat-messages" id="portalChatBox">
+            <div class="chat-msg">
+              <div class="chat-avatar">VK</div>
+              <div class="chat-bubble">
+                <span class="chat-name">Coach Vikram <i class="fas fa-check-circle" style="color:var(--accent-primary);font-size:10px;"></i></span>
+                <p>Who's ready for the 6AM HIIT tomorrow? Don't skip leg day! 🔥</p>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar">RK</div>
+              <div class="chat-bubble">
+                <span class="chat-name">Raj Kumar</span>
+                <p>Already booked coach! Bringing a friend too.</p>
+              </div>
+            </div>
+          </div>
+          <form class="chat-input-area" id="portalChatForm">
+            <input type="text" id="portalChatInput" placeholder="Message the community..." required autocomplete="off">
+            <button type="submit" class="btn-orange btn-small"><i class="fas fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="text-align: center; border-top: none; margin-top: 0; padding-top: 0;">
+      <p>&copy; 2026 MAPS Premium Fitness Club. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

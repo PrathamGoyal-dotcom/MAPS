@@ -30,7 +30,7 @@
 
   // ─── Initialize chatbot ───
   GymChatBot.init({
-    typingDelay: 600,
+    typingDelay: 100,
     enableContext: true,
     enableSuggestions: true,
     onTypingStart: function () {
