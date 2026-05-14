@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 const { pool, initDb } = require('./db');
 
@@ -9,12 +11,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
+// Email Transporter Configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Initialize Database
 initDb();
+
+// Serve Static Files (Frontend)
+app.use(express.static(path.join(__dirname, '../')));
+
+// 0. Root Route for Health Check
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 // Routes
 
@@ -101,32 +120,54 @@ app.post('/api/join', async (req, res) => {
   }
 });
 
-// 4. Payment Record & Email Notification Simulation
+// 4. Payment Record & Email Notification
 app.post('/api/payment', async (req, res) => {
   const { user, className, amount, status } = req.body;
-  const adminEmail = 'sarvagya665@gmail.com';
+  const adminEmail = process.env.ADMIN_EMAIL || 'sarvagya665@gmail.com';
 
-  console.log('--- PAYMENT RECORD INITIATED ---');
-  console.log(`To: ${adminEmail}`);
-  console.log(`Subject: New Booking Confirmed - ${className}`);
+  console.log(`--- BOOKING RECORD: ${className} ---`);
   console.log(`User: ${user.username} (${user.email})`);
-  console.log(`Class: ${className}`);
-  console.log(`Amount Paid: ₹${amount}`);
   console.log(`Status: ${status}`);
-  console.log('-------------------------------');
 
-  // In a real app, you would use Nodemailer here:
-  /*
-  const transporter = nodemailer.createTransport({...});
-  await transporter.sendMail({
-    from: '"MAPS Gym" <noreply@mapsgym.in>',
-    to: adminEmail,
-    subject: `New Booking: ${className}`,
-    text: `User ${user.username} has paid ₹${amount} for ${className}.`
-  });
-  */
+  try {
+    // Save to Database
+    await pool.query(
+      'INSERT INTO bookings (username, email, class_name, amount, status) VALUES ($1, $2, $3, $4, $5)',
+      [user.username, user.email, className, amount, status]
+    );
+    console.log('Booking saved to database.');
 
-  res.json({ message: 'Payment record sent to administrator.' });
+    // Send Actual Email
+    const mailOptions = {
+      from: `"MAPS Gym" <${process.env.EMAIL_USER}>`,
+      to: adminEmail,
+      subject: `New Booking: ${className}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px;">
+          <h2 style="color: #FF2D2D;">New Booking Confirmed</h2>
+          <p><strong>User:</strong> ${user.username}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Class/Plan:</strong> ${className}</p>
+          <p><strong>Amount:</strong> ₹${amount}</p>
+          <p><strong>Status:</strong> ${status}</p>
+          <hr style="border: 0; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #888;">This is an automated notification from MAPS Gym Portal.</p>
+        </div>
+      `
+    };
+
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.EMAIL_PASS !== 'your-app-password') {
+      await transporter.sendMail(mailOptions);
+      console.log('Email sent successfully to:', adminEmail);
+      res.json({ message: 'Booking record saved and email sent to administrator.' });
+    } else {
+      console.log('Skipping real email: Credentials missing or placeholder detected.');
+      res.json({ message: 'Booking saved to database (Email skipped due to missing credentials).' });
+    }
+  } catch (error) {
+    console.error('Error in /api/payment:', error);
+    res.status(500).json({ message: 'Error processing booking record' });
+  }
 });
 
 app.listen(PORT, () => {

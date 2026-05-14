@@ -57,6 +57,19 @@ const initDb = async () => {
       )
     `);
 
+    // Create bookings table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS bookings (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        class_name VARCHAR(100) NOT NULL,
+        amount DECIMAL(10, 2) DEFAULT 0,
+        status VARCHAR(50) DEFAULT 'Pending',
+        booked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     console.log('Database initialized successfully');
   } catch (err) {
     console.error('Error initializing database:', err);

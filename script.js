@@ -947,8 +947,32 @@ document.addEventListener('click', (e) => {
     if (!isBooked) {
       activeBookingBtn = btn;
       const className = btn.closest('.schedule-item').querySelector('h4').textContent;
-      currentPrice = 499; 
-      openCheckout(className, currentPrice);
+      
+      // Instant Booking logic
+      btn.classList.remove('btn-white');
+      btn.classList.add('btn-orange');
+      btn.innerHTML = '<i class="fas fa-check"></i> Booked';
+      
+      // Animation effect
+      btn.style.transform = 'scale(1.1)';
+      setTimeout(() => btn.style.transform = '', 200);
+      
+      showToast(`Successfully booked ${className}!`, 'success');
+
+      // Notify backend of booking (simulated with 0 amount)
+      const user = JSON.parse(localStorage.getItem('maps_user')) || { username: 'Guest', email: 'guest@example.com' };
+      fetch('http://localhost:5000/api/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user: user,
+          className: className,
+          amount: 0,
+          status: 'Booked (Instant)'
+        })
+      }).catch(err => console.error('Booking Notification Error:', err));
+
+      activeBookingBtn = null;
     } else {
       btn.classList.remove('btn-orange');
       btn.classList.add('btn-white');
