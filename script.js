@@ -1037,6 +1037,39 @@ if (cancelCheckout) {
   });
 }
 
+// ===== PAYMENT METHOD TOGGLE =====
+const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+const cardPaymentFields = document.getElementById('cardPaymentFields');
+const upiPaymentFields = document.getElementById('upiPaymentFields');
+const payCardNumber = document.getElementById('payCardNumber');
+const payCardExpiry = document.getElementById('payCardExpiry');
+const payCardCvv = document.getElementById('payCardCvv');
+const payUpiId = document.getElementById('payUpiId');
+
+if (paymentMethods.length > 0) {
+  paymentMethods.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      if (e.target.value === 'upi') {
+        if(cardPaymentFields) cardPaymentFields.style.display = 'none';
+        if(upiPaymentFields) upiPaymentFields.style.display = 'block';
+        
+        if(payCardNumber) payCardNumber.removeAttribute('required');
+        if(payCardExpiry) payCardExpiry.removeAttribute('required');
+        if(payCardCvv) payCardCvv.removeAttribute('required');
+        if(payUpiId) payUpiId.setAttribute('required', 'true');
+      } else {
+        if(cardPaymentFields) cardPaymentFields.style.display = 'block';
+        if(upiPaymentFields) upiPaymentFields.style.display = 'none';
+        
+        if(payCardNumber) payCardNumber.setAttribute('required', 'true');
+        if(payCardExpiry) payCardExpiry.setAttribute('required', 'true');
+        if(payCardCvv) payCardCvv.setAttribute('required', 'true');
+        if(payUpiId) payUpiId.removeAttribute('required');
+      }
+    });
+  });
+}
+
 if (paymentForm) {
   paymentForm.addEventListener('submit', (e) => {
     e.preventDefault();

@@ -331,7 +331,7 @@
     <div class="trainers-grid">
       <div class="trainer-card glow-card reveal delay-100">
         <div class="trainer-img">
-          <img src="https://images.unsplash.com/photo-1583465554959-1e37aa43bd56?q=80&w=1374&auto=format&fit=crop" alt="Coach Vikram" loading="lazy">
+          <img src="images/coach_vikram.png" alt="Coach Vikram" loading="lazy">
           <div class="trainer-socials">
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -719,18 +719,37 @@
               <label>Email Address</label>
               <input type="email" id="payEmail" placeholder="your@email.com" required>
             </div>
-            <div class="form-group">
-              <label>Card Number</label>
-              <input type="text" placeholder="xxxx xxxx xxxx xxxx" required>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Expiry</label>
-                <input type="text" placeholder="MM/YY" required>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>Payment Method</label>
+              <div style="display: flex; gap: 15px;">
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                  <input type="radio" name="paymentMethod" value="card" checked> Credit/Debit Card
+                </label>
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                  <input type="radio" name="paymentMethod" value="upi"> UPI
+                </label>
               </div>
+            </div>
+            <div id="cardPaymentFields">
               <div class="form-group">
-                <label>CVV</label>
-                <input type="password" placeholder="***" required>
+                <label>Card Number</label>
+                <input type="text" id="payCardNumber" placeholder="xxxx xxxx xxxx xxxx" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Expiry</label>
+                  <input type="text" id="payCardExpiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label>CVV</label>
+                  <input type="password" id="payCardCvv" placeholder="***" required>
+                </div>
+              </div>
+            </div>
+            <div id="upiPaymentFields" style="display: none;">
+              <div class="form-group">
+                <label>UPI ID</label>
+                <input type="text" id="payUpiId" placeholder="yourname@upi">
               </div>
             </div>
             <button type="submit" class="btn-orange" style="width:100%; justify-content:center; margin-top:10px;">Pay & Complete Subscription</button>

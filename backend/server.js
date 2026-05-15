@@ -45,7 +45,23 @@ app.post('/api/register', async (req, res) => {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+  }
+
   try {
+    // Check if email already exists
+    const emailCheck = await pool.query('SELECT id FROM members WHERE email = $1', [email]);
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ message: 'Email ID already exists' });
+    }
+
+    // Check if username already exists
+    const userCheck = await pool.query('SELECT id FROM members WHERE username = $1', [username]);
+    if (userCheck.rows.length > 0) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
       'INSERT INTO members (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
@@ -57,9 +73,6 @@ app.post('/api/register', async (req, res) => {
     
     res.status(201).json({ user, token, message: 'Registration successful' });
   } catch (err) {
-    if (err.code === '23505') { // Unique violation
-      return res.status(400).json({ message: 'Username or email already exists' });
-    }
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
@@ -103,19 +116,77 @@ app.post('/api/login', async (req, res) => {
 // 3. Join Now / Contact Form Submission
 app.post('/api/join', async (req, res) => {
   const { name, email, phone, interest, message } = req.body;
+  const adminEmail = process.env.ADMIN_EMAIL || 'sarvagya665@gmail.com';
 
   if (!name || !email || !message) {
     return res.status(400).json({ message: 'Name, email, and message are required' });
   }
 
   try {
+    const submissionTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+
+    // Save to Database
     await pool.query(
       'INSERT INTO registrations (name, email, phone, interest, message) VALUES ($1, $2, $3, $4, $5)',
       [name, email, phone, interest, message]
     );
-    res.status(201).json({ message: 'Registration received successfully' });
+    console.log('Registration saved to database.');
+
+    // 1. Email for Admin (Owner)
+    const adminMailOptions = {
+      from: `"MAPS Gym" <${process.env.EMAIL_USER}>`,
+      to: adminEmail,
+      subject: `New Inquiry/Free Trial: ${interest}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px;">
+          <h2 style="color: #f97316;">New Free Trial Request</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+          <p><strong>Interest:</strong> ${interest}</p>
+          <p><strong>Message:</strong> ${message}</p>
+          <p><strong>Time of Request:</strong> ${submissionTime}</p>
+          <hr style="border: 0; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #888;">Automated notification to owner.</p>
+        </div>
+      `
+    };
+
+    // 2. Email for User
+    const userMailOptions = {
+      from: `"MAPS Gym" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Confirmation: Your Request at MAPS Gym`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px;">
+          <h2 style="color: #f97316;">Hi ${name},</h2>
+          <p>Thank you for reaching out to MAPS Gym! We have received your request for a <strong>${interest}</strong>.</p>
+          <p>Our team will review your details and contact you shortly.</p>
+          <h3>Your Submitted Details:</h3>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+          <p><strong>Message:</strong> ${message}</p>
+          <p><strong>Submission Time:</strong> ${submissionTime}</p>
+          <br/>
+          <p>Keep crushing it, <br/><strong>The MAPS Gym Team</strong></p>
+          <hr style="border: 0; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #888;">This is an automated confirmation message. Please do not reply directly.</p>
+        </div>
+      `
+    };
+
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.EMAIL_PASS !== 'your-app-password') {
+      await transporter.sendMail(adminMailOptions);
+      await transporter.sendMail(userMailOptions);
+      console.log('Registration emails sent successfully to owner and user.');
+      res.status(201).json({ message: 'Registration received and confirmation emails sent.' });
+    } else {
+      console.log('Skipping real emails for registration: Credentials missing or placeholder detected.');
+      console.log('Target Emails -> Owner:', adminEmail, 'User:', email);
+      res.status(201).json({ message: 'Registration saved (Emails skipped due to missing credentials).' });
+    }
   } catch (err) {
-    console.error(err);
+    console.error('Error in /api/join:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
