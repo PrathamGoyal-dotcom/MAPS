@@ -274,7 +274,7 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .program-content { padding: 40px 30px 30px; flex-grow: 1; display: flex; flex-direction: column; text-align: center; align-items: center; }
 .program-content h3 { font-size: 24px; font-weight: 800; color: var(--text-primary); margin-bottom: 12px; }
 .program-content p { font-size: 16px; color: var(--text-secondary); margin-bottom: 24px; flex-grow: 1; }
-.program-link { font-weight: 700; color: var(--accent-secondary); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition-fast); font-family: 'Outfit'; }
+.program-link { font-weight: 700; color: #CC1111; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition-fast); font-family: 'Outfit'; }
 .program-link i { transition: transform 0.3s ease; }
 .program-card:hover .program-link i { transform: translateX(5px); }
 
@@ -347,7 +347,7 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .testimonial-card blockquote { font-size: 17px; color: var(--text-secondary); font-style: italic; line-height: 1.8; margin-bottom: 30px; position: relative; z-index: 2; }
 .testimonial-author { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .testimonial-avatar { 
-  width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
+  width: 60px; height: 60px; border-radius: 50%; background: #FF2D2D; 
   display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; color: #fff; 
   flex-shrink: 0; box-shadow: var(--shadow-accent); font-family: 'Outfit'; margin: 0 auto; 
 }
@@ -374,7 +374,7 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .trainer-socials a:hover { background: var(--accent-primary); color: #fff; transform: translateY(-3px); border-color: var(--accent-primary); box-shadow: var(--shadow-accent); }
 .trainer-info { padding: 30px; text-align: center; flex-grow: 1; display: flex; flex-direction: column;}
 .trainer-info h3 { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
-.trainer-info .specialty { color: var(--accent-secondary); font-size: 15px; font-weight: 700; margin-bottom: 12px; font-family: 'Outfit'; }
+.trainer-info .specialty { color: #FF2D2D; font-size: 15px; font-weight: 700; margin-bottom: 12px; font-family: 'Outfit'; }
 .trainer-info .certs { 
   color: var(--text-secondary); font-size: 13px; font-weight: 600; margin-bottom: 16px; 
   background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); padding: 4px 12px; border-radius: 50px; display: inline-block; 
@@ -445,12 +445,13 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .msg-author { font-size: 12px; color: var(--text-light); font-weight: 600; margin-bottom: 4px; margin-left: 4px; }
 .message.me .msg-author { margin-right: 4px; margin-left: 0; }
 .msg-text { 
-  background: rgba(11, 11, 11, 0.6); padding: 12px 16px; border-radius: 16px; border-top-left-radius: 4px; 
+  background: rgba(11, 11, 11, 0.6); padding: 14px 18px; border-radius: 18px; border-top-left-radius: 4px; 
   color: var(--text-primary); font-size: 15px; border: 1px solid var(--border-glass); 
+  line-height: 1.6; letter-spacing: 0.3px; 
 }
 .message.me .msg-text { 
-  background: rgba(255, 45, 45, 0.1); border-color: rgba(255, 45, 45, 0.2); 
-  border-top-left-radius: 16px; border-top-right-radius: 4px; color: var(--text-primary); 
+  background: #FF2D2D; border-color: #FF2D2D; 
+  border-top-left-radius: 18px; border-top-right-radius: 4px; color: #fff; 
 }
 .chat-input-area { display: flex; gap: 10px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-glass); }
 .chat-input-area input { 
@@ -459,7 +460,7 @@ img { max-width: 100%; display: block; object-fit: cover; }
 }
 .chat-input-area input:focus { border-color: var(--accent-primary); background: var(--bg-main); box-shadow: 0 0 0 4px rgba(255, 45, 45, 0.1); }
 .chat-input-area button { 
-  width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
+  width: 50px; height: 50px; border-radius: 50%; background: #FF2D2D; 
   color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 18px; 
   cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-sm); flex-shrink: 0; 
 }
@@ -619,7 +620,7 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .input-group:focus-within { border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(255, 45, 45, 0.1); }
 .input-group input { flex: 1; padding: 12px 20px; background: transparent; border: none; color: var(--text-primary); font-size: 15px; outline: none; font-family: 'Plus Jakarta Sans'; }
 .input-group input::placeholder { color: var(--text-light); }
-.input-group button { padding: 12px 24px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: var(--radius-sm); color: #fff; font-weight: 700; cursor: pointer; transition: var(--transition); font-family: 'Outfit'; }
+.input-group button { padding: 12px 24px; background: #FF2D2D; border: none; border-radius: var(--radius-sm); color: #fff; font-weight: 700; cursor: pointer; transition: var(--transition); font-family: 'Outfit'; }
 .input-group button:hover { transform: scale(1.02); box-shadow: var(--shadow-accent); }
 .footer-bottom { border-top: 1px solid var(--border-glass); padding: 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
 .footer-bottom-links a { color: var(--text-secondary); text-decoration: none; margin-left: 24px; transition: var(--transition-fast); }
@@ -660,7 +661,7 @@ body.cursor-hover .cursor-outline { width: 60px; height: 60px; background-color:
 /* ===== AI CHATBOT ===== */
 .ai-bot-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
 .ai-bot-toggle { 
-  width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
+  width: 60px; height: 60px; border-radius: 50%; background: #FF2D2D; 
   color: #fff; font-size: 24px; border: none; cursor: pointer; box-shadow: var(--shadow-lg), 0 0 0 0 rgba(255, 45, 45, 0.7); 
   display: flex; align-items: center; justify-content: center; transition: var(--transition); animation: pulse 2s infinite; 
 }
@@ -675,7 +676,7 @@ body.cursor-hover .cursor-outline { width: 60px; height: 60px; background-color:
   will-change: transform, opacity;
 }
 .ai-chat-window.open { transform: scale(1); opacity: 1; pointer-events: all; }
-.ai-header { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; color: #fff; }
+.ai-header { background: #FF2D2D; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; color: #fff; }
 .ai-title { font-weight: 800; font-family: 'Outfit'; font-size: 16px; display: flex; align-items: center; gap: 8px; }
 .ai-close { background: none; border: none; color: rgba(255, 255, 255, 0.8); font-size: 18px; cursor: pointer; transition: var(--transition-fast); }
 .ai-close:hover { color: #fff; }
@@ -781,7 +782,6 @@ body.cursor-hover .cursor-outline { width: 60px; height: 60px; background-color:
 .zone::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--accent-primary), transparent); opacity: 0; transition: opacity 0.3s; }
 .zone:hover { color: #fff; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); border-color: var(--accent-primary); }
 .zone:hover::before { opacity: 0.2; }
-.zone-weights { grid-column: 1 / 3; }
 .floorplan-preview { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-glass); box-shadow: var(--shadow-lg); }
 .floorplan-preview img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
 .fp-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(11,11,11,0.9), transparent); color: #fff; font-family: 'Outfit'; font-size: 24px; font-weight: 800; transform: translateY(100%); transition: transform 0.3s ease; }
