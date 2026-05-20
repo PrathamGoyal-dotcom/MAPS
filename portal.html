@@ -236,22 +236,27 @@
                 Members Lounge</h3>
             </div>
             <div class="chat-messages" id="portalChatBox">
-              <div class="message">
-                <div class="msg-avatar">VK</div>
-                <div class="msg-content">
-                  <span class="msg-author">Coach Vikram <i class="fas fa-check-circle"
-                      style="color:var(--accent-primary);font-size:10px;"></i></span>
-                  <div class="msg-text">Who's ready for the 6AM HIIT tomorrow? Don't skip leg day! 🔥</div>
-                </div>
-              </div>
-              <div class="message me">
-                <div class="msg-avatar" style="background: #FF2D2D; color: #fff; border-color: #FF2D2D;">RK</div>
-                <div class="msg-content">
-                  <span class="msg-author">Raj Kumar</span>
-                  <div class="msg-text">Already booked coach! Bringing a friend too.</div>
-                </div>
+              <!-- Historic messages will load here dynamically -->
+            </div>
+
+            <!-- Portal Chat Typing Indicator -->
+            <div class="portal-chat-typing" id="portalChatTyping">
+              <span class="typing-text">Someone is typing</span>
+              <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
             </div>
+
+            <!-- Portal Chat Quick Suggestion Chips -->
+            <div class="chat-chips-container" id="portalChatChips">
+              <button class="chat-chip" data-msg="Count me in! 🔥">Count me in! 🔥</button>
+              <button class="chat-chip" data-msg="Leg day is on, let's go! 🏋️">Leg day! 🏋️</button>
+              <button class="chat-chip" data-msg="Thanks for the guidance, Coach! 🙌">Thanks Coach 🙌</button>
+              <button class="chat-chip" data-msg="HIIT session was absolutely insane today! 🏃💨">Insane HIIT! 🏃</button>
+            </div>
+
             <form class="chat-input-area" id="portalChatForm">
               <input type="text" id="portalChatInput" placeholder="Message the community..." required
                 autocomplete="off">

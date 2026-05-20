@@ -517,44 +517,356 @@ scheduleFilters.forEach(filter => {
 });
 
 // ===== MEMBER COMMUNITY CHAT SIMULATION =====
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-const communityChat = document.getElementById('communityChat');
+const portalChatForm = document.getElementById('portalChatForm');
+const portalChatInput = document.getElementById('portalChatInput');
+const portalChatBox = document.getElementById('portalChatBox');
+const portalChatTyping = document.getElementById('portalChatTyping');
+const portalChatChips = document.getElementById('portalChatChips');
 
-if (chatForm) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const text = chatInput.value.trim();
-    if (!text) return;
-    
-    // Add user message
-    const msgHTML = `
-      <div class="message me">
-        <div class="msg-content">
-          <div class="msg-author">You</div>
-          <div class="msg-text">${text}</div>
-        </div>
+// Deterministic HSL gradient avatar generator
+function hashAvatarColor(username) {
+  const gradients = [
+    'linear-gradient(135deg, #FF2D2D, #CC1111)', // Neon Red
+    'linear-gradient(135deg, #FF8008, #FFC837)', // Sunset Orange
+    'linear-gradient(135deg, #11998e, #38ef7d)', // Emerald Green
+    'linear-gradient(135deg, #00c6ff, #0072ff)', // Electric Blue
+    'linear-gradient(135deg, #8A2387, #E94057)', // Cosmic Pink/Purple
+    'linear-gradient(135deg, #f857a6, #ff5858)', // Neon Rose
+    'linear-gradient(135deg, #38bdf8, #0369a1)', // Sky Blue
+    'linear-gradient(135deg, #f97316, #c2410c)'  // Burnt Amber
+  ];
+  let hash = 0;
+  for (let i = 0; i < username.length; i++) {
+    hash = username.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return gradients[Math.abs(hash) % gradients.length];
+}
+
+// Simulated active gym members/coaches list for lounge dynamics
+const simulatedActors = [
+  { name: 'Coach Vikram', isCoach: true, responses: {
+    leg: "Leg day is mandatory! Make sure to focus on squats and proper knee tracking. See you at 6 AM! 🏋️",
+    hiit: "HIIT is perfect for metabolic conditioning. Keep your rest intervals short and push to 90% HR! 🔥",
+    diet: "Abs are made in the kitchen! Focus on high protein intake (1.6g-2g per kg bodyweight) and whole foods. 🥩",
+    default: "Keep training hard! Squeeze every single rep and focus on that mind-muscle connection! 💪"
+  }},
+  { name: 'Coach Neha', isCoach: true, responses: {
+    yoga: "Great to see interest in flexibility! Morning Yoga helps align breathing, posture, and core recovery. 🧘‍♀️",
+    injury: "Listen to your body! If you feel joint pain, substitute with active recovery and mobility stretches. 🩹",
+    default: "Consistency is your greatest superpower. Show up today, even if it's just for a recovery session! ✨"
+  }},
+  { name: 'Coach Arjun', isCoach: true, responses: {
+    crossfit: "CrossFit builds ultimate functional power. Form first, speed second. Tomorrow we have heavy deadlifts! 🏋️‍♂️",
+    default: "Excuses don't build muscle. Pack your bag, drink your water, and let's get to work! 🚀"
+  }},
+  { name: 'Ananya (Powerlifter)', isCoach: false, responses: {
+    default: "Just hit a new PR on deadlifts today! The energy in the MAPS lounge is absolutely unmatched! 📈"
+  }}
+];
+
+// Helper to append messages to UI
+function appendChatMessage(msg, animate = true) {
+  if (!portalChatBox) return;
+
+  const currentUserStr = localStorage.getItem('maps_user');
+  const currentUser = currentUserStr ? JSON.parse(currentUserStr) : null;
+  
+  const isMe = currentUser && currentUser.username === msg.username;
+  const isCoach = msg.is_coach || msg.username.toLowerCase().includes('coach');
+  const avatarColor = msg.avatar_color || hashAvatarColor(msg.username);
+  const initials = msg.username.substring(0, 2).toUpperCase();
+
+  // Parse relative/formatted timestamp
+  let timestamp = 'Just now';
+  if (msg.created_at) {
+    const date = new Date(msg.created_at);
+    timestamp = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // Check if message is a system notification
+  if (msg.is_system) {
+    const sysHTML = `
+      <div class="message system" data-msg-id="${msg.id}">
+        <span>${msg.message}</span>
       </div>
     `;
-    communityChat.insertAdjacentHTML('beforeend', msgHTML);
-    chatInput.value = '';
-    communityChat.scrollTop = communityChat.scrollHeight;
-    
-    // Simulate someone replying after 2 seconds
-    setTimeout(() => {
-      const replyHTML = `
-        <div class="message">
-          <div class="msg-avatar" style="background: var(--green);">N</div>
-          <div class="msg-content">
-            <div class="msg-author">Neha (Coach)</div>
-            <div class="msg-text">Awesome! Keep pushing hard! 💪</div>
-          </div>
+    portalChatBox.insertAdjacentHTML('beforeend', sysHTML);
+    portalChatBox.scrollTop = portalChatBox.scrollHeight;
+    return;
+  }
+
+  // Render emoji reaction badges
+  let reactionsHTML = '';
+  if (msg.reactions && Object.keys(msg.reactions).length > 0) {
+    reactionsHTML = `<div class="chat-reactions-display">`;
+    for (const [key, count] of Object.entries(msg.reactions)) {
+      if (count > 0) {
+        const emoji = key === 'thumbs_up' ? '👍' : (key === 'fire' ? '🔥' : (key === 'muscle' ? '💪' : '❤️'));
+        reactionsHTML += `<span class="reaction-badge" data-msg-id="${msg.id}" data-reaction="${key}">${emoji} ${count}</span>`;
+      }
+    }
+    reactionsHTML += `</div>`;
+  }
+
+  const reactionToolbarHTML = isMe ? '' : `
+    <div class="chat-reaction-toolbar">
+      <button class="reaction-btn" data-msg-id="${msg.id}" data-reaction="thumbs_up">👍</button>
+      <button class="reaction-btn" data-msg-id="${msg.id}" data-reaction="fire">🔥</button>
+      <button class="reaction-btn" data-msg-id="${msg.id}" data-reaction="muscle">💪</button>
+      <button class="reaction-btn" data-msg-id="${msg.id}" data-reaction="heart">❤️</button>
+    </div>
+  `;
+
+  const msgHTML = `
+    <div class="message ${isMe ? 'me' : ''} ${isCoach ? 'coach' : ''}" data-msg-id="${msg.id}" style="${animate ? '' : 'animation: none;'}">
+      <div class="msg-avatar" style="background: ${avatarColor}; color: #fff;">${initials}</div>
+      <div class="msg-content">
+        <span class="msg-author">
+          ${msg.username} 
+          ${isCoach ? '<i class="fas fa-check-circle" style="color:var(--accent-primary); font-size:10px;"></i>' : ''} 
+          <span style="font-size: 9px; color: var(--text-dim); margin-left: 8px; font-weight: 500;">${timestamp}</span>
+        </span>
+        <div class="msg-text">
+          ${msg.message}
+          ${reactionToolbarHTML}
         </div>
-      `;
-      communityChat.insertAdjacentHTML('beforeend', replyHTML);
-      communityChat.scrollTop = communityChat.scrollHeight;
-    }, 2000);
+        ${reactionsHTML}
+      </div>
+    </div>
+  `;
+  
+  portalChatBox.insertAdjacentHTML('beforeend', msgHTML);
+  portalChatBox.scrollTop = portalChatBox.scrollHeight;
+}
+
+// Fetch historical messages from database
+function loadLoungeChat() {
+  if (!portalChatBox) return;
+  
+  // Clear hardcoded visual loaders
+  portalChatBox.innerHTML = '';
+
+  fetch('http://localhost:5000/api/chat')
+    .then(res => res.json())
+    .then(messages => {
+      if (messages.length === 0) {
+        // Append initial warm system message if database is empty
+        appendChatMessage({
+          id: 0,
+          username: 'System',
+          message: '✨ Welcome to the MAPS Gym Lounge. Start a conversation with the community!',
+          is_system: true
+        });
+      } else {
+        messages.forEach(msg => appendChatMessage(msg, false));
+      }
+    })
+    .catch(err => {
+      console.error('Error fetching lounge history:', err);
+      showToast('Could not load chat history.', 'error');
+    });
+}
+
+// Send user message to database
+function sendLoungeMessage(text) {
+  const currentUserStr = localStorage.getItem('maps_user');
+  if (!currentUserStr) {
+    showToast('You must be logged in to chat!', 'error');
+    return;
+  }
+
+  const currentUser = JSON.parse(currentUserStr);
+  const payload = {
+    username: currentUser.username,
+    message: text,
+    isCoach: currentUser.username.toLowerCase().includes('coach'),
+    avatarColor: hashAvatarColor(currentUser.username)
+  };
+
+  fetch('http://localhost:5000/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(savedMsg => {
+    appendChatMessage(savedMsg);
+    
+    // Trigger Context-aware Coach/Member responses
+    triggerLoungeInteraction(text);
+  })
+  .catch(err => {
+    console.error('Error sending message:', err);
+    showToast('Failed to deliver message.', 'error');
   });
+}
+
+// Trigger contextual simulated coach replies
+function triggerLoungeInteraction(userText) {
+  const normalizedText = userText.toLowerCase();
+  
+  // Pick random actor
+  const actor = simulatedActors[Math.floor(Math.random() * simulatedActors.length)];
+  
+  // Determine relevant response based on keywords
+  let responseText = actor.responses.default;
+  for (const [key, response] of Object.entries(actor.responses)) {
+    if (normalizedText.includes(key)) {
+      responseText = response;
+      break;
+    }
+  }
+
+  // Show typing indicator
+  setTimeout(() => {
+    if (portalChatTyping) {
+      portalChatTyping.querySelector('.typing-text').textContent = `${actor.name} is typing`;
+      portalChatTyping.classList.add('show');
+      portalChatBox.scrollTop = portalChatBox.scrollHeight;
+    }
+
+    // Append persistent actor message after 1.8 seconds typing state
+    setTimeout(() => {
+      if (portalChatTyping) portalChatTyping.classList.remove('show');
+      
+      const payload = {
+        username: actor.name,
+        message: responseText,
+        isCoach: actor.isCoach,
+        avatarColor: hashAvatarColor(actor.name)
+      };
+
+      fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(savedMsg => {
+        appendChatMessage(savedMsg);
+      })
+      .catch(err => console.error(err));
+    }, 1800);
+  }, 1000);
+}
+
+// Handle submitting emoji reactions
+function submitReaction(messageId, reactionType) {
+  fetch('http://localhost:5000/api/chat/react', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messageId, reactionType })
+  })
+  .then(res => res.json())
+  .then(updatedMsg => {
+    // Find target message element in UI and update reactions
+    const msgElement = document.querySelector(`.message[data-msg-id="${messageId}"]`);
+    if (msgElement) {
+      let reactionsDisplay = msgElement.querySelector('.chat-reactions-display');
+      if (!reactionsDisplay) {
+        reactionsDisplay = document.createElement('div');
+        reactionsDisplay.className = 'chat-reactions-display';
+        msgElement.querySelector('.msg-content').appendChild(reactionsDisplay);
+      }
+      
+      // Render badges insidereactions container
+      reactionsDisplay.innerHTML = '';
+      for (const [key, count] of Object.entries(updatedMsg.reactions)) {
+        if (count > 0) {
+          const emoji = key === 'thumbs_up' ? '👍' : (key === 'fire' ? '🔥' : (key === 'muscle' ? '💪' : '❤️'));
+          reactionsDisplay.insertAdjacentHTML('beforeend', `<span class="reaction-badge" data-msg-id="${messageId}" data-reaction="${key}">${emoji} ${count}</span>`);
+        }
+      }
+    }
+  })
+  .catch(err => console.error('Reaction error:', err));
+}
+
+// Bind community chat logic if form exists
+if (portalChatForm) {
+  portalChatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = portalChatInput.value.trim();
+    if (!text) return;
+    
+    sendLoungeMessage(text);
+    portalChatInput.value = '';
+  });
+
+  // Event delegation for quick suggestion chips
+  if (portalChatChips) {
+    portalChatChips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chat-chip');
+      if (chip) {
+        const text = chip.dataset.msg;
+        sendLoungeMessage(text);
+      }
+    });
+  }
+
+  // Event delegation for reactions buttons and badges
+  portalChatBox.addEventListener('click', (e) => {
+    // Click on reaction toolbar buttons
+    const btn = e.target.closest('.reaction-btn');
+    if (btn) {
+      const messageId = parseInt(btn.dataset.msgId);
+      const reaction = btn.dataset.reaction;
+      submitReaction(messageId, reaction);
+      return;
+    }
+
+    // Click on reaction badges to increment
+    const badge = e.target.closest('.reaction-badge');
+    if (badge) {
+      const messageId = parseInt(badge.dataset.msgId);
+      const reaction = badge.dataset.reaction;
+      submitReaction(messageId, reaction);
+    }
+  });
+
+  // Initialize and load chat once DOM loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    // Check if token exists to see if user is logged in
+    const token = localStorage.getItem('maps_token');
+    if (token) {
+      loadLoungeChat();
+    }
+  });
+
+  // Also hook into tab switching to reload chat when tab is opened
+  document.querySelectorAll('.portal-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.dataset.tab === 'chat') {
+        loadLoungeChat();
+      }
+    });
+  });
+
+  // Simulated active community lounge background notifications
+  const ambientNotificationTexts = [
+    "🔥 Rohan just booked CrossFit Open tomorrow!",
+    "🧘‍♀️ Neha posted a new yoga breathing sequence.",
+    "🏋️ Vikram started a HIIT Burnout session in Zone 1.",
+    "⚡ Arjun joined the MAPS Community Lounge.",
+    "💪 Ananya hit a new personal record on squat bench!"
+  ];
+
+  setInterval(() => {
+    // Randomly choose to append an ambient notification if community tab is active
+    const activeTab = document.querySelector('.portal-tab.active');
+    if (activeTab && activeTab.dataset.tab === 'chat') {
+      const isNotification = Math.random() > 0.45;
+      if (isNotification) {
+        const notifyMsg = ambientNotificationTexts[Math.floor(Math.random() * ambientNotificationTexts.length)];
+        appendChatMessage({
+          id: Date.now(),
+          username: 'System',
+          message: notifyMsg,
+          is_system: true
+        });
+      }
+    }
+  }, 40000); // Trigger every 40 seconds of active lounge session
 }
 
 // ===== AI CHATBOT (POWERED BY NLP ENGINE & TENSORFLOW) =====

@@ -70,6 +70,24 @@ const initDb = async () => {
       )
     `);
 
+    // Create chat_messages table with JSONB reactions
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS chat_messages (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50) NOT NULL,
+        message TEXT NOT NULL,
+        is_coach BOOLEAN DEFAULT FALSE,
+        avatar_color VARCHAR(100) DEFAULT '#FF2D2D',
+        reactions JSONB DEFAULT '{}'::jsonb,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Ensure column is large enough to hold gradient strings
+    await client.query(`
+      ALTER TABLE chat_messages ALTER COLUMN avatar_color TYPE VARCHAR(100);
+    `);
+
     console.log('Database initialized successfully');
   } catch (err) {
     console.error('Error initializing database:', err);

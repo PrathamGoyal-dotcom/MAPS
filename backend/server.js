@@ -241,6 +241,64 @@ app.post('/api/payment', async (req, res) => {
   }
 });
 
+// ===== COMMUNITY LOUNGE CHAT API =====
+
+// 5. Get recent chat messages
+app.get('/api/chat', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM (SELECT * FROM chat_messages ORDER BY id DESC LIMIT 50) sub ORDER BY id ASC'
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching chat:', err);
+    res.status(500).json({ message: 'Error retrieving chat messages' });
+  }
+});
+
+// 6. Post new chat message
+app.post('/api/chat', async (req, res) => {
+  const { username, message, isCoach, avatarColor } = req.body;
+  if (!username || !message) {
+    return res.status(400).json({ message: 'Username and message are required' });
+  }
+  
+  try {
+    const result = await pool.query(
+      'INSERT INTO chat_messages (username, message, is_coach, avatar_color) VALUES ($1, $2, $3, $4) RETURNING *',
+      [username, message, isCoach || false, avatarColor || '#FF2D2D']
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error saving chat message:', err);
+    res.status(500).json({ message: 'Error saving chat message' });
+  }
+});
+
+// 7. Add reaction to a message
+app.post('/api/chat/react', async (req, res) => {
+  const { messageId, reactionType } = req.body;
+  if (!messageId || !reactionType) {
+    return res.status(400).json({ message: 'Message ID and reaction type are required' });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE chat_messages 
+       SET reactions = jsonb_set(reactions, ARRAY[$2], to_jsonb(COALESCE((reactions->>$2)::int, 0) + 1)) 
+       WHERE id = $1 RETURNING *`,
+      [messageId, reactionType]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Message not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error adding reaction:', err);
+    res.status(500).json({ message: 'Error adding reaction' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
