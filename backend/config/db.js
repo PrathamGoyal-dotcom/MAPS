@@ -1,22 +1,22 @@
 const { Pool } = require('pg');
-require('dotenv').config();
+const env = require('./env');
 
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'maps_gym',
-  password: process.env.DB_PASSWORD || 'postgres',
-  port: process.env.DB_PORT || 5432,
+  user: env.DB_USER,
+  host: env.DB_HOST,
+  database: env.DB_NAME,
+  password: env.DB_PASSWORD,
+  port: env.DB_PORT,
 });
 
-const initDb = async () => {
+const connectDB = async () => {
   // First, connect to 'postgres' database to ensure 'maps_gym' exists
   const tempPool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
+    user: env.DB_USER,
+    host: env.DB_HOST,
     database: 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres',
-    port: process.env.DB_PORT || 5432,
+    password: env.DB_PASSWORD,
+    port: env.DB_PORT,
   });
 
   try {
@@ -96,4 +96,4 @@ const initDb = async () => {
   }
 };
 
-module.exports = { pool, initDb };
+module.exports = { pool, connectDB };
